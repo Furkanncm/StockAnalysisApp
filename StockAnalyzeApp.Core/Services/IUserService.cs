@@ -1,4 +1,5 @@
 ﻿using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.UserDtos;
 using StockAnalyzeApp.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace StockAnalyzeApp.Core.Services
         Task<CustomResponseDto<UserResponseDto>> GetUserByUserCode(int userCode);
 
         Task<CustomResponseDto<UserWithOrdersDto>> GetUsersOrders(int userId);
+
+        Task<CustomResponseDto<UserWithStocksDto>> GetUsersStocks(int userId);
     }
 }

@@ -12,7 +12,7 @@ namespace StockAnalyzeApp.Service.Service
     public class Service<T> : IService<T> where T : class
     {
         private readonly IGenericRepository<T> _repository;
-        private readonly IUnitOfWork _unitOfWork;
+        protected readonly IUnitOfWork _unitOfWork;
 
         public Service(IUnitOfWork unitOfWork, IGenericRepository<T> repository)
         {

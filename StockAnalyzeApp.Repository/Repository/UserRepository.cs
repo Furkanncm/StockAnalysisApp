@@ -22,5 +22,11 @@ namespace StockAnalyzeApp.Repository.Repository
             var response = await _context.Users.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == userId);
             return response;
         }
+
+        public async Task<User> GetUsersStocks(int userId)
+        {
+            var response= await _context.Users.Include(x => x.Stocks).FirstOrDefaultAsync(x => x.Id == userId);
+            return response;
+        }
     }
 }

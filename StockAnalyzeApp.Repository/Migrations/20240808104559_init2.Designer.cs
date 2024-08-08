@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StockAnalyzeApp.Repository;
 
@@ -11,9 +12,11 @@ using StockAnalyzeApp.Repository;
 namespace StockAnalyzeApp.Repository.Migrations
 {
     [DbContext(typeof(StockAnalyzeAppContext))]
-    partial class StockAnalyzeAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240808104559_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,81 +58,81 @@ namespace StockAnalyzeApp.Repository.Migrations
                         {
                             Id = 1,
                             Address = "123 Tech Street",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1403),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(581),
                             Name = "TechCorp",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1414)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(591)
                         },
                         new
                         {
                             Id = 2,
                             Address = "456 Innovation Ave",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1416),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(593),
                             Name = "Innovate Inc.",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1416)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(594)
                         },
                         new
                         {
                             Id = 3,
                             Address = "789 Alpha Road",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1418),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(595),
                             Name = "Alpha Co.",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1418)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(595)
                         },
                         new
                         {
                             Id = 4,
                             Address = "321 Beta Blvd",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1420),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(596),
                             Name = "Beta Corp.",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1420)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(597)
                         },
                         new
                         {
                             Id = 5,
                             Address = "654 Gamma Lane",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1422),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(598),
                             Name = "Gamma LLC",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1422)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(598)
                         },
                         new
                         {
                             Id = 6,
                             Address = "987 Delta Drive",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1423),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(599),
                             Name = "Delta Ltd.",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1424)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(600)
                         },
                         new
                         {
                             Id = 7,
                             Address = "147 Epsilon Parkway",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1425),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(601),
                             Name = "Epsilon Enterprises",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1426)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(601)
                         },
                         new
                         {
                             Id = 8,
                             Address = "258 Zeta Avenue",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1427),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(602),
                             Name = "Zeta Solutions",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1427)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(603)
                         },
                         new
                         {
                             Id = 9,
                             Address = "369 Eta Street",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1429),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(604),
                             Name = "Eta Inc.",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1429)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(604)
                         },
                         new
                         {
                             Id = 10,
                             Address = "741 Theta Way",
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1431),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(605),
                             Name = "Theta Technologies",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1431)
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(606)
                         });
                 });
 
@@ -145,6 +148,7 @@ namespace StockAnalyzeApp.Repository.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("OrderCode")
+                        .IsUnicode(true)
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -162,9 +166,6 @@ namespace StockAnalyzeApp.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderCode")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
@@ -173,101 +174,101 @@ namespace StockAnalyzeApp.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1704),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(817),
                             OrderCode = 5001,
                             Price = 1000m,
                             Quantity = 10,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1706),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(819),
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1708),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(820),
                             OrderCode = 5002,
                             Price = 2000m,
                             Quantity = 20,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1708),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(821),
                             UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1710),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(822),
                             OrderCode = 5003,
                             Price = 3000m,
                             Quantity = 30,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1711),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(823),
                             UserId = 2
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1712),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(824),
                             OrderCode = 5004,
                             Price = 4000m,
                             Quantity = 40,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1713),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(825),
                             UserId = 2
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1715),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(826),
                             OrderCode = 5005,
                             Price = 5000m,
                             Quantity = 50,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1715),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(827),
                             UserId = 3
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1717),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(828),
                             OrderCode = 5006,
                             Price = 6000m,
                             Quantity = 60,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1717),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(828),
                             UserId = 3
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1719),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(830),
                             OrderCode = 5007,
                             Price = 7000m,
                             Quantity = 70,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1719),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(830),
                             UserId = 4
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1721),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(832),
                             OrderCode = 5008,
                             Price = 8000m,
                             Quantity = 80,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1721),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(832),
                             UserId = 4
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1723),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(833),
                             OrderCode = 5009,
                             Price = 9000m,
                             Quantity = 90,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1723),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(835),
                             UserId = 5
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1725),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(836),
                             OrderCode = 5010,
                             Price = 10000m,
                             Quantity = 100,
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1725),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(837),
                             UserId = 5
                         });
                 });
@@ -292,6 +293,7 @@ namespace StockAnalyzeApp.Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("StockCode")
+                        .IsUnicode(true)
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -306,9 +308,6 @@ namespace StockAnalyzeApp.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StockCode")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Stock");
@@ -317,111 +316,111 @@ namespace StockAnalyzeApp.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1934),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(946),
                             Name = "AAPL",
                             Quantity = 50,
                             StockCode = 10001,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1935),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(946),
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1937),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(948),
                             Name = "GOOGL",
                             Quantity = 30,
                             StockCode = 10002,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1938),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(949),
                             UserId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1940),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(950),
                             Name = "MSFT",
                             Quantity = 20,
                             StockCode = 10003,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1941),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(951),
                             UserId = 2
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1943),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(952),
                             Name = "AMZN",
                             Quantity = 40,
                             StockCode = 10004,
                             Type = "Retail",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1943),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(952),
                             UserId = 2
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1945),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(954),
                             Name = "TSLA",
                             Quantity = 60,
                             StockCode = 10005,
                             Type = "Automotive",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1946),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(954),
                             UserId = 3
                         },
                         new
                         {
                             Id = 6,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1947),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(955),
                             Name = "FB",
                             Quantity = 70,
                             StockCode = 10006,
                             Type = "Social Media",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1948),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(956),
                             UserId = 3
                         },
                         new
                         {
                             Id = 7,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1949),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(957),
                             Name = "NFLX",
                             Quantity = 80,
                             StockCode = 10007,
                             Type = "Entertainment",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1950),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(958),
                             UserId = 4
                         },
                         new
                         {
                             Id = 8,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1951),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(959),
                             Name = "NVDA",
                             Quantity = 90,
                             StockCode = 10008,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1952),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(959),
                             UserId = 4
                         },
                         new
                         {
                             Id = 9,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1953),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(961),
                             Name = "AMD",
                             Quantity = 100,
                             StockCode = 10009,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1954),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(961),
                             UserId = 5
                         },
                         new
                         {
                             Id = 10,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1956),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(963),
                             Name = "INTC",
                             Quantity = 110,
                             StockCode = 10010,
                             Type = "Technology",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(1956),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(963),
                             UserId = 5
                         });
                 });
@@ -464,14 +463,12 @@ namespace StockAnalyzeApp.Repository.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserCode")
+                        .IsUnicode(true)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("UserCode")
-                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -481,11 +478,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 1,
                             Address = "123 Main St",
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2108),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1077),
                             FirstName = "John",
                             LastName = "Doe",
                             Password = "password1",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2109),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1077),
                             UserCode = 1001
                         },
                         new
@@ -493,11 +490,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 2,
                             Address = "456 Oak St",
                             CompanyId = 2,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2114),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1079),
                             FirstName = "Jane",
                             LastName = "Doe",
                             Password = "password2",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2115),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1080),
                             UserCode = 1002
                         },
                         new
@@ -505,11 +502,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 3,
                             Address = "789 Pine St",
                             CompanyId = 3,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2117),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1081),
                             FirstName = "Jim",
                             LastName = "Beam",
                             Password = "password3",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2117),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1082),
                             UserCode = 1003
                         },
                         new
@@ -517,11 +514,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 4,
                             Address = "321 Maple St",
                             CompanyId = 4,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2119),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1083),
                             FirstName = "Jack",
                             LastName = "Daniels",
                             Password = "password4",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2119),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1084),
                             UserCode = 1004
                         },
                         new
@@ -529,11 +526,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 5,
                             Address = "654 Elm St",
                             CompanyId = 5,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2121),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1085),
                             FirstName = "Johnny",
                             LastName = "Walker",
                             Password = "password5",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2122),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1086),
                             UserCode = 1005
                         },
                         new
@@ -541,11 +538,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 6,
                             Address = "987 Cedar St",
                             CompanyId = 5,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2123),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1087),
                             FirstName = "Tom",
                             LastName = "Collins",
                             Password = "password6",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2124),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1087),
                             UserCode = 1006
                         },
                         new
@@ -553,11 +550,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 7,
                             Address = "147 Birch St",
                             CompanyId = 6,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2126),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1089),
                             FirstName = "Margarita",
                             LastName = "Garcia",
                             Password = "password7",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2126),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1089),
                             UserCode = 1007
                         },
                         new
@@ -565,11 +562,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 8,
                             Address = "258 Cherry St",
                             CompanyId = 6,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2128),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1166),
                             FirstName = "Mojito",
                             LastName = "Smith",
                             Password = "password8",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2128),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1167),
                             UserCode = 1008
                         },
                         new
@@ -577,11 +574,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 9,
                             Address = "369 Walnut St",
                             CompanyId = 7,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2130),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1168),
                             FirstName = "Mai",
                             LastName = "Tai",
                             Password = "password9",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2130),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1169),
                             UserCode = 1009
                         },
                         new
@@ -589,11 +586,11 @@ namespace StockAnalyzeApp.Repository.Migrations
                             Id = 10,
                             Address = "741 Ash St",
                             CompanyId = 7,
-                            CreatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2132),
+                            CreatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1170),
                             FirstName = "Piña",
                             LastName = "Colada",
                             Password = "password10",
-                            UpdatedDate = new DateTime(2024, 8, 8, 13, 48, 45, 682, DateTimeKind.Local).AddTicks(2132),
+                            UpdatedDate = new DateTime(2024, 8, 8, 13, 45, 58, 546, DateTimeKind.Local).AddTicks(1171),
                             UserCode = 1010
                         });
                 });

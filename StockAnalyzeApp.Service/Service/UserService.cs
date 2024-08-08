@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.UserDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
@@ -36,6 +37,13 @@ namespace StockAnalyzeApp.Service.Service
            var result = await _userRepository.GetUsersOrders(userId);
             var dto = _mapper.Map<UserWithOrdersDto>(result);
             return CustomResponseDto<UserWithOrdersDto>.Success(dto, 200);
+        }
+
+        public async Task<CustomResponseDto<UserWithStocksDto>> GetUsersStocks(int userId)
+        {
+            var result = await _userRepository.GetUsersStocks(userId);
+            var dto = _mapper.Map<UserWithStocksDto>(result);
+            return CustomResponseDto<UserWithStocksDto>.Success(dto, 200);
         }
     }
 }

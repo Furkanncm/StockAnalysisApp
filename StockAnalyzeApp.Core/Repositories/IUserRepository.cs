@@ -14,5 +14,7 @@ namespace StockAnalyzeApp.Core.Repositories
         Task<User> GetUserByUserCode(int userCode);
 
         Task<User> GetUsersOrders(int userId);
+
+        Task<User> GetUsersStocks(int userId);
     }
 }
