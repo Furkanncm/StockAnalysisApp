@@ -18,6 +18,9 @@ public class MapProfile : Profile
 
 
         CreateMap<Order, OrderDto>().ReverseMap();
+        CreateMap<Order, OrderAddDto>().ReverseMap();
+        CreateMap<Order, OrderUpdateDto>().ReverseMap();
+        CreateMap<Order, OrderInfoDto>().ReverseMap();
 
 
         CreateMap<Stock, StockDto>().ReverseMap();

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAnalyzeApp.Core.Models
+namespace StockAnalyzeApp.Core.Dto.OrderDtos
 {
-    public class Order:BaseModel
+    public class OrderInfoDto
     {
+        public int Id { get; set; }
         public int OrderCode { get; set; }
 
         public int Quantity { get; set; }
@@ -15,8 +16,5 @@ namespace StockAnalyzeApp.Core.Models
         public decimal Price { get; set; }
         public decimal TotalPrice { get; set; }
         public int UserId { get; set; }
-
-        public User User { get; set; }
-
     }
 }

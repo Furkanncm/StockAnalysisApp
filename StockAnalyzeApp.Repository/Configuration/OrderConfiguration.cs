@@ -22,6 +22,7 @@ namespace StockAnalyzeApp.Repository.Configuration
             builder.Property(x => x.Price).IsRequired().HasPrecision(18,2);
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.HasOne(x => x.User).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+            builder.Property(x=>x.TotalPrice).HasComputedColumnSql("[Quantity]*[Price]").HasPrecision(18,2);
            
         }
     }
