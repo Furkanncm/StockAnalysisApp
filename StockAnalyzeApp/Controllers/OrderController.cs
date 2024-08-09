@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
@@ -33,7 +33,7 @@ namespace StockAnalyzeApp.Controllers
         //[HttpGet("[action]/{OrderCode}")]
         //public async Task<IActionResult> GetWithOrderCode(int OrderCode)
         //{
-        //    var response = await orderService.GetWithOrderCode(OrderCode);
+        //    var response = await orderService.(OrderCode);
         //    return Ok(response);
         //}
 
@@ -49,6 +49,16 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> Add(OrderAddDto orderAddDto)
         {
             var order = mapper.Map<Order>(orderAddDto);
+            var ids = orderService.GetOrderIds();
+            if (!ids.Contains(order.UserId))
+            {
+                return Ok(CustomResponseDto<NoContentDto>.Fail("UserId is not valid", 400));
+            }
+            var ordercodes= orderService.GetOrderCodes();
+            if (ordercodes.Contains(order.OrderCode))
+            {
+                return Ok(CustomResponseDto<NoContentDto>.Fail("OrderCode is not valid", 400));
+            }
             await orderService.AddAsync(order);
             return Created();
         }
@@ -58,6 +68,12 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> Update(OrderUpdateDto orderUpdateDto)
         {
             var order = mapper.Map<Order>(orderUpdateDto);
+            var ids = orderService.GetOrderIds();
+            if (!ids.Contains(order.UserId))
+            {
+                return Ok(CustomResponseDto<NoContentDto>.Fail("UserId is not valid", 400));
+            }
+
             await orderService.Update(order);
             return NoContent();
         }

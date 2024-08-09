@@ -1,4 +1,4 @@
-﻿using StockAnalyzeApp.Core.Dto;
+﻿using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.UserDtos;
 using StockAnalyzeApp.Core.Models;
 using System;

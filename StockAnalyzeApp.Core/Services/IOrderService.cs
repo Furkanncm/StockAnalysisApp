@@ -1,4 +1,4 @@
-﻿using StockAnalyzeApp.Core.Dto;
+﻿using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
 using StockAnalyzeApp.Core.Models;
 using System;
@@ -12,5 +12,11 @@ namespace StockAnalyzeApp.Core.Services
     public interface IOrderService: IService<Order>
     {
         Task<CustomResponseDto<IEnumerable<OrderInfoDto>>> GetGreaterTotalPriceOrder(int price);
+
+        List<int> GetOrderIds();
+
+        List<int> GetOrderCodes();
+
+
     }
 }

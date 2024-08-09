@@ -1,4 +1,4 @@
-﻿using StockAnalyzeApp.Core.Dto;
+﻿using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
 using System;
@@ -15,5 +15,9 @@ namespace StockAnalyzeApp.Core.Services
 
         Task<CustomResponseDto<StockAddDto>> GetWithStockCode(int stockCode);
         Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(int stockCode);
+
+        Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(int barcode,int quantity);
+
+        List<int> GetStockCodes();
     }
 }

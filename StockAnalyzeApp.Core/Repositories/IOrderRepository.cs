@@ -10,5 +10,11 @@ namespace StockAnalyzeApp.Core.Repositories
     public interface IOrderRepository:IGenericRepository<Order>
     {   
         Task<IEnumerable<Order>> GetGreaterTotalPriceOrder(int price);
+
+        List<int> GetOrderIds();
+
+        List<int> GetOrderCodes();
+
+
     }
 }

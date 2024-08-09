@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using StockAnalyzeApp.Core.Dto.CompanyDtos;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Dto.UserDtos;
@@ -26,6 +27,11 @@ public class MapProfile : Profile
         CreateMap<Stock, StockDto>().ReverseMap();
         CreateMap<Stock, StockAddDto>().ReverseMap();
         CreateMap<Stock, StockUpdateDto>().ReverseMap();
+
+
+        CreateMap<Company, CompanywithUsers>().ReverseMap();
+        CreateMap<Company, CompanyAddDto>().ReverseMap();
+        CreateMap<Company, CompanyDto>().ReverseMap();
 
 
 

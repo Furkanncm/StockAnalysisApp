@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
@@ -23,6 +23,30 @@ namespace StockAnalyzeApp.Service.Service
             _mapper=mapper;
         }
 
+        public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(int barcode,int quantity)
+        {
+            if (quantity==0)
+            {
+                return CustomResponseDto<StockDto>.Fail("Quantity must not equals to 0",400);
+            }
+            else
+            {
+                var response = await _stockRepository.GetWithStockCode(barcode);
+                if (response==null)
+                {
+                    return CustomResponseDto<StockDto>.Fail("Stock not found",404);
+                }
+                else
+                {
+                    response.Quantity += quantity;
+                    await _unitOfWork.CommitAsync();
+                    return CustomResponseDto<StockDto>.Success(_mapper.Map<StockDto>(response), 200);
+                }
+                
+            }
+            
+        }
+
         public async Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(int stockCode)
         {
             await _stockRepository.DeleteWithStocCode(stockCode);
@@ -37,11 +61,24 @@ namespace StockAnalyzeApp.Service.Service
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto,200);
         }
 
+        public List<int> GetStockCodes()
+        {
+            var response = _stockRepository.StockIds();
+            return response;
+        }
+
         public async Task<CustomResponseDto<StockAddDto>> GetWithStockCode(int stockCode)
         {
             var response= await _stockRepository.GetWithStockCode(stockCode);
-            var dto = _mapper.Map<StockAddDto>(response);
-            return CustomResponseDto<StockAddDto>.Success(dto,200);
+            if (response==null)
+            {
+                return CustomResponseDto<StockAddDto>.Fail("Stock not found", 404);
+            }
+            else
+            {
+                var dto = _mapper.Map<StockAddDto>(response);
+                return CustomResponseDto<StockAddDto>.Success(dto, 200);
+            }
         }
     }
 }

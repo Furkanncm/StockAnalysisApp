@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace StockAnalyzeApp.Core.Dto
+namespace StockAnalyzeApp.Core.Dto.BaseResponseDtos
 {
     public class CustomResponseDto<T> where T : class
     {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.UserDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Services;
@@ -14,11 +14,13 @@ namespace StockAnalyzeApp.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ICompanyService companyService;
 
-        public UserController(IMapper mapper, IUserService userService)
+        public UserController(IMapper mapper, IUserService userService, ICompanyService companyService)
         {
             _mapper=mapper;
             _userService=userService;
+            this.companyService=companyService;
         }
 
         [HttpGet]
@@ -62,9 +64,16 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> AddUsers(UserAddDto userAddDto)
         {
             var entity = _mapper.Map<User>(userAddDto);
-          await _userService.AddAsync(entity);
-            //return Ok(CustomResponseDto<UserAddDto>.Success(userAddDto, 200));
-            return Created();
+            var list=await companyService.GetCompanyIds();
+            if (!list.Contains(userAddDto.CompanyId))
+            {
+                return Ok(CustomResponseDto<NoContentDto>.Fail("CompanyId is not Valid", 400));
+            }
+            else
+            {
+                await _userService.AddAsync(entity);
+                return Created();
+            }
         }
 
         [HttpPut()]

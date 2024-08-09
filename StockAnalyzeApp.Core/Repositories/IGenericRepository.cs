@@ -17,5 +17,7 @@ namespace StockAnalyzeApp.Core.Repositories
         void DeleteAll(T entity);
         void Update(T entity);
         void UpdateRange(IEnumerable<T> entities);
+
+        Task<IEnumerable<int>> GetValidIdsAsync();
     }
 }

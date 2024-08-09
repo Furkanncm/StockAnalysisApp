@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StockAnalyzeApp.Core.Dto;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using System;
@@ -14,7 +15,6 @@ namespace StockAnalyzeApp.Repository.Repository
         public StockRepository(StockAnalyzeAppContext context) : base(context)
         {
         }
-
         public async Task DeleteWithStocCode(int stockCode)
         {
             var result = await _context.Stock.Where(x => x.StockCode == stockCode).FirstOrDefaultAsync();
@@ -32,6 +32,16 @@ namespace StockAnalyzeApp.Repository.Repository
         public async Task<Stock> GetWithStockCode(int stockCode)
         {
             var result=await _context.Stock.Where(x => x.StockCode == stockCode).FirstOrDefaultAsync();
+            if(result==null)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public  List<int> StockIds()
+        {
+            var result=  _context.Stock.Select(x => x.StockCode).ToList();
             return result;
         }
     }

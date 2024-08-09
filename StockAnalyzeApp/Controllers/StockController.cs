@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Services;
@@ -47,8 +47,23 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> Add(StockAddDto stockAddDto)
         {
             var stock = _mapper.Map<Stock>(stockAddDto);
-            await _stockService.AddAsync(stock);
-            return Created();
+            var res = _stockService.GetStockCodes();
+            if (res.Contains(stock.StockCode))
+            {
+                return Ok(CustomResponseDto<NoContentDto>.Fail("Stock code must be unique", 400));
+            }
+            else
+            {
+                await _stockService.AddAsync(stock);
+                return Created();
+            }
+        }
+
+        [HttpPost("[action]/{barcode}/{quantity}")]
+        public async Task<IActionResult> AddStockWithBarcode(int barcode, int quantity)
+        {
+            var response = await _stockService.ChangeQuantityStockWithBarcode(barcode, quantity);
+            return Ok(response);
         }
 
         [HttpPut]

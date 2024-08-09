@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAnalyzeApp.Core.Dto
+namespace StockAnalyzeApp.Core.Dto.CompanyDtos
 {
-    public class NoContentDto
+    public class CompanyUpdateDto:CompanyAddDto
     {
+        public int Id { get; set; }
     }
 }

@@ -14,5 +14,8 @@ namespace StockAnalyzeApp.Core.Repositories
         Task<Stock> GetWithStockCode(int stockCode);
 
         Task DeleteWithStocCode(int stockCode);
+
+        List<int> StockIds();
+
     }
 }

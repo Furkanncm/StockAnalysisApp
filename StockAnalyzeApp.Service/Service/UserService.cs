@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.UserDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
@@ -18,10 +18,12 @@ namespace StockAnalyzeApp.Service.Service
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUnitOfWork unitOfWork, IGenericRepository<User> repository, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, repository)
+        private readonly ICompanyRepository companyRepository;
+        public UserService(IUnitOfWork unitOfWork, IGenericRepository<User> repository, IUserRepository userRepository, IMapper mapper, ICompanyRepository companyRepository) : base(unitOfWork, repository)
         {
             _userRepository=userRepository;
             _mapper=mapper;
+            this.companyRepository=companyRepository;
         }
 
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
@@ -28,8 +28,18 @@ namespace StockAnalyzeApp.Service.Service
         {
            var response= await orderRepository.GetGreaterTotalPriceOrder(price);
             var data = mapper.Map<IEnumerable<OrderInfoDto>>(response);
-            return  CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(data,200);
-            
+            return  CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(data,200);        }
+
+        public List<int> GetOrderCodes()
+        {
+            var response= orderRepository.GetOrderCodes();
+            return response;
+        }
+
+        public List<int> GetOrderIds()
+        {
+           var response= orderRepository.GetOrderIds();
+            return response;
         }
     }
 }

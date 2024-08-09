@@ -65,5 +65,10 @@ namespace StockAnalyzeApp.Repository.Repository
         {
             _dbSet.UpdateRange(entities);
         }
+
+        public Task<IEnumerable<int>> GetValidIdsAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
