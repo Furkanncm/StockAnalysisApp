@@ -36,5 +36,11 @@ namespace StockAnalyzeApp.Repository.Repository
             var response=  _context.Orders.Select(x => x.UserId).ToList();
             return response;
         }
+
+        public async Task<Order> GetOrdersWithUsers(int OrderCode)
+        {
+            var response =  await _context.Orders.Include(x => x.User).FirstOrDefaultAsync(x=>x.OrderCode==OrderCode);
+            return response;
+        }
     }
 }

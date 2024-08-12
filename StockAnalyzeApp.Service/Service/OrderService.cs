@@ -41,5 +41,12 @@ namespace StockAnalyzeApp.Service.Service
            var response= orderRepository.GetOrderIds();
             return response;
         }
+
+        public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(int OrderCode)
+        {
+           var response= await orderRepository.GetOrdersWithUsers(OrderCode);
+            var data = mapper.Map<OrderWithUserDto>(response);
+            return CustomResponseDto<OrderWithUserDto>.Success(data,200);
+        }
     }
 }

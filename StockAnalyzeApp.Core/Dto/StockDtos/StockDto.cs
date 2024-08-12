@@ -16,5 +16,7 @@ namespace StockAnalyzeApp.Core.Dto.StockDtos
         public int StockCode { get; set; }
 
         public int Quantity { get; set; }
+
+        public int UserId { get; set; }
     }
 }

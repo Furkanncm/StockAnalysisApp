@@ -29,9 +29,9 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{StockCode}")]
-        public async Task<IActionResult> GetWithStockCode(int StockCode)
+        public async Task<IActionResult> GetStockWithUser(int StockCode)
         {
-            var response = await _stockService.GetWithStockCode(StockCode);
+            var response = await _stockService.GetStockWithUser(StockCode);
             return Ok(response);
         }
 
@@ -40,6 +40,15 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> GetLessThan(int quantity)
         {
             var response = await _stockService.GetLessThan(quantity);
+            return Ok(response);
+        }
+
+
+        [HttpGet("[action]")]
+
+        public async Task<IActionResult> GetNoStocks()
+        {
+            var response = await _stockService.GetNoStocks();
             return Ok(response);
         }
 

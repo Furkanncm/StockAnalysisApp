@@ -18,5 +18,6 @@ namespace StockAnalyzeApp.Core.Models
 
         public User User { get; set; }
 
+        public int OrderAcceptanceId { get; set; }
     }
 }

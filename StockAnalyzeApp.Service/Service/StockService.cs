@@ -31,7 +31,7 @@ namespace StockAnalyzeApp.Service.Service
             }
             else
             {
-                var response = await _stockRepository.GetWithStockCode(barcode);
+                var response = await _stockRepository.GetStockWithUser(barcode);
                 if (response==null)
                 {
                     return CustomResponseDto<StockDto>.Fail("Stock not found",404);
@@ -61,23 +61,30 @@ namespace StockAnalyzeApp.Service.Service
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto,200);
         }
 
+        public async Task<CustomResponseDto<IEnumerable<StockDto>>> GetNoStocks()
+        {
+            var response = await _stockRepository.GetNoStocks();
+            var dto = _mapper.Map<IEnumerable<StockDto>>(response);
+            return CustomResponseDto<IEnumerable<StockDto>>.Success(dto, 200);
+        }
+
         public List<int> GetStockCodes()
         {
             var response = _stockRepository.StockIds();
             return response;
         }
 
-        public async Task<CustomResponseDto<StockAddDto>> GetWithStockCode(int stockCode)
+        public async Task<CustomResponseDto<StockWithUserDto>> GetStockWithUser(int stockCode)
         {
-            var response= await _stockRepository.GetWithStockCode(stockCode);
+            var response= await _stockRepository.GetStockWithUser(stockCode);
             if (response==null)
             {
-                return CustomResponseDto<StockAddDto>.Fail("Stock not found", 404);
+                return CustomResponseDto<StockWithUserDto>.Fail("Stock not found", 404);
             }
             else
             {
-                var dto = _mapper.Map<StockAddDto>(response);
-                return CustomResponseDto<StockAddDto>.Success(dto, 200);
+                var dto = _mapper.Map<StockWithUserDto>(response);
+                return CustomResponseDto<StockWithUserDto>.Success(dto, 200);
             }
         }
     }

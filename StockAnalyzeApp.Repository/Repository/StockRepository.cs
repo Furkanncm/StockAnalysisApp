@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockAnalyzeApp.Core.Dto;
+using StockAnalyzeApp.Core.Dto.OrderDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using System;
@@ -29,9 +30,10 @@ namespace StockAnalyzeApp.Repository.Repository
 
         }
 
-        public async Task<Stock> GetWithStockCode(int stockCode)
+      
+        public async Task<Stock> GetStockWithUser(int stockCode)
         {
-            var result=await _context.Stock.Where(x => x.StockCode == stockCode).FirstOrDefaultAsync();
+            var result=await _context.Stock.Include(x=>x.User).FirstOrDefaultAsync(x => x.StockCode == stockCode);
             if(result==null)
             {
                 return null;
@@ -44,5 +46,11 @@ namespace StockAnalyzeApp.Repository.Repository
             var result=  _context.Stock.Select(x => x.StockCode).ToList();
             return result;
         }
+        public async Task<IEnumerable<Stock>> GetNoStocks()
+        {
+            var result = await _context.Stock.Where(x => x.Quantity == 0).ToListAsync();
+            return result;
+        }
+
     }
 }

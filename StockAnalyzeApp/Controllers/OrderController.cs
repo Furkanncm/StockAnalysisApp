@@ -30,12 +30,12 @@ namespace StockAnalyzeApp.Controllers
             return Ok(CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(responseDto, 200));
         }
 
-        //[HttpGet("[action]/{OrderCode}")]
-        //public async Task<IActionResult> GetWithOrderCode(int OrderCode)
-        //{
-        //    var response = await orderService.(OrderCode);
-        //    return Ok(response);
-        //}
+        [HttpGet("[action]/{OrderCode}")]
+        public async Task<IActionResult> GetOrderWithUsers(int OrderCode)
+        {
+            var response = await orderService.GetOrderWithUsers(OrderCode);
+            return Ok(response);
+        }
 
         [HttpGet("[action]/{price}")]
         public async Task<IActionResult> GetGreaterTotalPriceOrder(int price)

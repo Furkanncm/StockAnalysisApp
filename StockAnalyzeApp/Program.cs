@@ -1,5 +1,9 @@
 using FluentValidation.AspNetCore;
+using Microsoft.Azure.Management.Sql.Fluent.Models;
 using Microsoft.EntityFrameworkCore;
+using Quartz.Impl;
+using Quartz.Spi;
+using Quartz;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
@@ -27,9 +31,25 @@ builder.Services.AddDbContext<StockAnalyzeAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString"), x =>
     {
         x.MigrationsAssembly(Assembly.GetAssembly(typeof(StockAnalyzeAppContext)).GetName().Name);
-        Console.WriteLine("Baðlandý");
+        Console.WriteLine("Connected");
     });
 });
+
+// Quartz hizmetlerini ekleyin
+builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
+builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+// Quartz iþ ve trigger tanýmýný ekleyin
+builder.Services.AddSingleton<StockCheckJob>();
+builder.Services.AddSingleton(new JobSchedule(
+    jobType: typeof(StockCheckJob),
+    cronExpression: "0 0/1 * 1/1 * ? *" // Her sabah saat 09:00'da çalýþacak.
+));
+
+builder.Services.AddHostedService<QuartzHostedService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddSingleton<StockCheckJob>(); // Quartz Job
+
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));

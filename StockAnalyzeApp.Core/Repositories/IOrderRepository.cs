@@ -14,6 +14,7 @@ namespace StockAnalyzeApp.Core.Repositories
         List<int> GetOrderIds();
 
         List<int> GetOrderCodes();
+        Task<Order> GetOrdersWithUsers(int OrderCode);
 
 
     }

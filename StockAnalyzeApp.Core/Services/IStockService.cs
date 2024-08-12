@@ -13,11 +13,13 @@ namespace StockAnalyzeApp.Core.Services
     {
         Task<CustomResponseDto<IEnumerable<StockDto>>> GetLessThan(int quantity);
 
-        Task<CustomResponseDto<StockAddDto>> GetWithStockCode(int stockCode);
+        Task<CustomResponseDto<StockWithUserDto>> GetStockWithUser(int stockCode);
         Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(int stockCode);
 
         Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(int barcode,int quantity);
 
         List<int> GetStockCodes();
+
+        Task<CustomResponseDto<IEnumerable<StockDto>>> GetNoStocks();
     }
 }

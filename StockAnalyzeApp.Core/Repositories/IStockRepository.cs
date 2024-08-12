@@ -1,4 +1,5 @@
-﻿using StockAnalyzeApp.Core.Models;
+﻿using StockAnalyzeApp.Core.Dto.OrderDtos;
+using StockAnalyzeApp.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace StockAnalyzeApp.Core.Repositories
     {
         Task<IEnumerable<Stock>> GetLessThan(int quantity);
 
-        Task<Stock> GetWithStockCode(int stockCode);
+        Task<Stock> GetStockWithUser(int stockCode);
 
         Task DeleteWithStocCode(int stockCode);
 
         List<int> StockIds();
+
+        Task<IEnumerable<Stock>> GetNoStocks();
 
     }
 }
