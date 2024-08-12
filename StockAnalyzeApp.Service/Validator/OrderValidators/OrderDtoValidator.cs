@@ -14,7 +14,7 @@ namespace StockAnalyzeApp.Service.Validator.OrderValidators
         {
             RuleFor(x => x.Quantity).GreaterThan(0).NotEmpty().WithMessage("Quantity must not be Empty");
             RuleFor(x => x.Price).GreaterThan(0).NotEmpty().WithMessage("Price must not be Empty");
-            RuleFor(x => x.OrderCode).GreaterThan(0).NotEmpty().WithMessage("OrderCode must not be Empty");
+            RuleFor(x => x.OrderCode).NotEmpty().WithMessage("OrderCode must not be Empty");
         }
     }
 }

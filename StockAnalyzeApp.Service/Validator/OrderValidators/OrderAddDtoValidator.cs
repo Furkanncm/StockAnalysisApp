@@ -14,7 +14,7 @@ namespace StockAnalyzeApp.Service.Validator.OrderValidators
         {
             RuleFor(x => x.Quantity).GreaterThan(0).NotEmpty();
             RuleFor(x => x.Price).GreaterThan(0).NotEmpty();
-            RuleFor(x => x.OrderCode).GreaterThan(0).NotEmpty();
+            RuleFor(x => x.OrderCode).NotEmpty();
             RuleFor(x => x.UserId).NotEmpty();
         }
     }

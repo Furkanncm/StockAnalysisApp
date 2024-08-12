@@ -30,7 +30,7 @@ namespace StockAnalyzeApp.Service.Service
             var data = mapper.Map<IEnumerable<OrderInfoDto>>(response);
             return  CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(data,200);        }
 
-        public List<int> GetOrderCodes()
+        public List<string> GetOrderCodes()
         {
             var response= orderRepository.GetOrderCodes();
             return response;
@@ -42,7 +42,7 @@ namespace StockAnalyzeApp.Service.Service
             return response;
         }
 
-        public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(int OrderCode)
+        public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(string OrderCode)
         {
            var response= await orderRepository.GetOrdersWithUsers(OrderCode);
             var data = mapper.Map<OrderWithUserDto>(response);

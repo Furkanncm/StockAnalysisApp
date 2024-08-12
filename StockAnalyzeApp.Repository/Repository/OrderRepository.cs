@@ -25,7 +25,7 @@ namespace StockAnalyzeApp.Repository.Repository
             return response;
         }
 
-        public List<int> GetOrderCodes()
+        public List<string> GetOrderCodes()
         {
             var response = _context.Orders.Select(x => x.OrderCode).ToList();
             return response;
@@ -37,7 +37,7 @@ namespace StockAnalyzeApp.Repository.Repository
             return response;
         }
 
-        public async Task<Order> GetOrdersWithUsers(int OrderCode)
+        public async Task<Order> GetOrdersWithUsers(string OrderCode)
         {
             var response =  await _context.Orders.Include(x => x.User).FirstOrDefaultAsync(x=>x.OrderCode==OrderCode);
             return response;

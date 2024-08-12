@@ -31,7 +31,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{OrderCode}")]
-        public async Task<IActionResult> GetOrderWithUsers(int OrderCode)
+        public async Task<IActionResult> GetOrderWithUsers(string    OrderCode)
         {
             var response = await orderService.GetOrderWithUsers(OrderCode);
             return Ok(response);

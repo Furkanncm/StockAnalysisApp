@@ -8,7 +8,7 @@ namespace StockAnalyzeApp.Core.Models
 {
     public class Order:BaseModel
     {
-        public int OrderCode { get; set; }
+        public string OrderCode { get; set; }
 
         public int Quantity { get; set; }
 
@@ -18,6 +18,5 @@ namespace StockAnalyzeApp.Core.Models
 
         public User User { get; set; }
 
-        public int OrderAcceptanceId { get; set; }
     }
 }

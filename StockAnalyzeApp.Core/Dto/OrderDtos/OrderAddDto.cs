@@ -8,7 +8,7 @@ namespace StockAnalyzeApp.Core.Dto.OrderDtos
 {
     public class OrderAddDto
     {
-        public int OrderCode { get; set; } 
+        public string OrderCode { get; set; } 
 
         public int Quantity { get; set; }
 

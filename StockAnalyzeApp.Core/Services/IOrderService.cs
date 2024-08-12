@@ -15,9 +15,9 @@ namespace StockAnalyzeApp.Core.Services
 
         List<int> GetOrderIds();
 
-        List<int> GetOrderCodes();
+        List<string> GetOrderCodes();
 
-        Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(int OrderCode);
+        Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(string OrderCode);
 
 
     }
