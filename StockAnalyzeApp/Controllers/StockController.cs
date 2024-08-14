@@ -29,7 +29,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{StockCode}")]
-        public async Task<IActionResult> GetStockWithUser(int StockCode)
+        public async Task<IActionResult> GetStockWithUser(string StockCode)
         {
             var response = await _stockService.GetStockWithUser(StockCode);
             return Ok(response);
@@ -76,7 +76,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPost("[action]/{StockCode}/{quantity}")]
-        public async Task<IActionResult> ChangeQuantityStockWithBarcode(int StockCode, int quantity)
+        public async Task<IActionResult> ChangeQuantityStockWithBarcode(string StockCode, int quantity)
         {
             var response = await _stockService.ChangeQuantityStockWithBarcode(StockCode, quantity);
             return Ok(response);
@@ -91,7 +91,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpDelete("[action]/{StockCode}")]
-        public async Task<IActionResult> DeleteWithStockCode(int StockCode)
+        public async Task<IActionResult> DeleteWithStockCode(string StockCode)
         {
             await _stockService.DeleteWithStockCode(StockCode);
             return Ok(CustomResponseDto<NoContentDto>.Success(204));

@@ -25,7 +25,7 @@ namespace StockAnalyzeApp.Service.Service
             _orderRepository=orderRepository;
         }
 
-        public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(int barcode,int quantity)
+        public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(string barcode,int quantity)
         {
             if (quantity==0)
             {
@@ -88,7 +88,7 @@ namespace StockAnalyzeApp.Service.Service
             return response;
         }
 
-        public async Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(int stockCode)
+        public async Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(string stockCode)
         {
             await _stockRepository.DeleteWithStocCode(stockCode);
             await _unitOfWork.CommitAsync();
@@ -109,13 +109,13 @@ namespace StockAnalyzeApp.Service.Service
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto, 200);
         }
 
-        public List<int> GetStockCodes()
+        public List<string> GetStockCodes()
         {
             var response = _stockRepository.StockIds();
             return response;
         }
 
-        public async Task<CustomResponseDto<StockWithUserDto>> GetStockWithUser(int stockCode)
+        public async Task<CustomResponseDto<StockWithUserDto>> GetStockWithUser(string stockCode)
         {
             var response= await _stockRepository.GetStockWithUser(stockCode);
             if (response==null)

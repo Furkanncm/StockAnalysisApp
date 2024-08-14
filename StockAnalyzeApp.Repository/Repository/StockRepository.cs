@@ -18,7 +18,7 @@ namespace StockAnalyzeApp.Repository.Repository
         public StockRepository(StockAnalyzeAppContext context) : base(context)
         {
         }
-        public async Task DeleteWithStocCode(int stockCode)
+        public async Task DeleteWithStocCode(string stockCode)
         {
             var result = await _context.Stock.Where(x => x.StockCode == stockCode).FirstOrDefaultAsync();
              _context.Stock.Remove(result);
@@ -33,7 +33,7 @@ namespace StockAnalyzeApp.Repository.Repository
         }
 
       
-        public async Task<Stock> GetStockWithUser(int stockCode)
+        public async Task<Stock> GetStockWithUser(string stockCode)
         {
             var result=await _context.Stock.Include(x=>x.User).FirstOrDefaultAsync(x => x.StockCode == stockCode);
             if(result==null)
@@ -43,7 +43,7 @@ namespace StockAnalyzeApp.Repository.Repository
             return result;
         }
 
-        public  List<int> StockIds()
+        public  List<string> StockIds()
         {
             var result=  _context.Stock.Select(x => x.StockCode).ToList();
             return result;

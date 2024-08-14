@@ -13,7 +13,7 @@ namespace StockAnalyzeApp.Core.Dto.StockDtos
 
         public string Type { get; set; }
 
-        public int StockCode { get; set; }
+        public string StockCode { get; set; }
 
         public int Quantity { get; set; }
 

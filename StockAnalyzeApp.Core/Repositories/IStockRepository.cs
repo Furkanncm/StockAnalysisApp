@@ -13,11 +13,11 @@ namespace StockAnalyzeApp.Core.Repositories
     {
         Task<IEnumerable<Stock>> GetLessThan(int quantity);
 
-        Task<Stock> GetStockWithUser(int stockCode);
+        Task<Stock> GetStockWithUser(string stockCode);
 
-        Task DeleteWithStocCode(int stockCode);
+        Task DeleteWithStocCode(string stockCode);
 
-        List<int> StockIds();
+        List<string> StockIds();
 
         List<string> ContainsOrderCode();
 
