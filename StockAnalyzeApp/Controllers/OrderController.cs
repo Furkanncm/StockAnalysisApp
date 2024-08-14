@@ -31,6 +31,13 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{OrderCode}")]
+        public async Task<IActionResult> GetWithOrderCode(string OrderCode)
+        {
+            var response = await orderService.GetWithOrderCode(OrderCode);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]/{OrderCode}")]
         public async Task<IActionResult> GetOrderWithUsers(string    OrderCode)
         {
             var response = await orderService.GetOrderWithUsers(OrderCode);
@@ -50,7 +57,7 @@ namespace StockAnalyzeApp.Controllers
         {
             var order = mapper.Map<Order>(orderAddDto);
             var ids = orderService.GetOrderIds();
-            if (!ids.Contains(order.UserId))
+            if (ids.Contains(order.UserId))
             {
                 return Ok(CustomResponseDto<NoContentDto>.Fail("UserId is not valid", 400));
             }

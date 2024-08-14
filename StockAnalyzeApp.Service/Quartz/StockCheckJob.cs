@@ -21,7 +21,7 @@ public class StockCheckJob : IJob
             var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
 
             // Stock miktarlarını kontrol etme işlemi
-            var noStockItems = await stockService.GetNoStocks();
+            var noStockItems = await stockService.GetDontHaveStocks();
             foreach (var stock in noStockItems.Data)
             {
                 // Bildirim gönderme işlemini gerçekleştirin.

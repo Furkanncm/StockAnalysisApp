@@ -46,32 +46,16 @@ namespace StockAnalyzeApp.Controllers
 
         [HttpGet("[action]")]
 
-        public async Task<IActionResult> GetNoStocks()
+        public async Task<IActionResult> GetDontHaveStocks()
         {
-            var response = await _stockService.GetNoStocks();
+            var response = await _stockService.GetDontHaveStocks();
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(StockAddDto stockAddDto)
-        {
-            var stock = _mapper.Map<Stock>(stockAddDto);
-            var res = _stockService.GetStockCodes();
-            if (res.Contains(stock.StockCode))
-            {
-                return Ok(CustomResponseDto<NoContentDto>.Fail("Stock code must be unique", 400));
-            }
-            else
-            {
-                await _stockService.AddAsync(stock);
-                return Created();
-            }
-        }
-
         [HttpPost("[action]")]
-        public async Task<IActionResult> CheckAndAcceptOrder( StockAddDto stockAddDto)
+        public async Task<IActionResult> CheckAndAcceptOrder(AddStockWithAcceptOrder addStockWithAcceptOrder)
         {
-            var response = await _stockService.CheckAndAcceptOrder(stockAddDto);
+            var response = await _stockService.CheckAndAcceptOrder(addStockWithAcceptOrder);
             return Ok(response);
         }
 

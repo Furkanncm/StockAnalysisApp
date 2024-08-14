@@ -21,7 +21,7 @@ namespace StockAnalyzeApp.Core.Repositories
 
         List<string> ContainsOrderCode();
 
-        Task<IEnumerable<Stock>> GetNoStocks();
+        Task<IEnumerable<Stock>> GetDontHaveStocks();
 
         Task CheckAndAcceptOrder(Stock stock);
 

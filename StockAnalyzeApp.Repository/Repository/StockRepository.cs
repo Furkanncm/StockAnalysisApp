@@ -48,7 +48,7 @@ namespace StockAnalyzeApp.Repository.Repository
             var result=  _context.Stock.Select(x => x.StockCode).ToList();
             return result;
         }
-        public async Task<IEnumerable<Stock>> GetNoStocks()
+        public async Task<IEnumerable<Stock>> GetDontHaveStocks()
         {
             var result = await _context.Stock.Where(x => x.Quantity == 0).ToListAsync();
             return result;

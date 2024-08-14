@@ -22,7 +22,7 @@ namespace StockAnalyzeApp.Core.Services
 
         List<string> ContainsOrderCode();
 
-        Task<CustomResponseDto<IEnumerable<StockDto>>> GetNoStocks();
-        Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(StockAddDto stockAddDto);
+        Task<CustomResponseDto<IEnumerable<StockDto>>> GetDontHaveStocks();
+        Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(AddStockWithAcceptOrder addStockWithAcceptOrder);
     }
 }

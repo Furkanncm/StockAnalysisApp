@@ -21,11 +21,13 @@ public class MapProfile : Profile
         CreateMap<Order, OrderUpdateDto>().ReverseMap();
         CreateMap<Order, OrderInfoDto>().ReverseMap();
         CreateMap<Order, OrderWithUserDto>().ReverseMap();
+        CreateMap<Order, OrderWithOrderCodeDto>().ReverseMap();
 
         CreateMap<Stock, StockDto>().ReverseMap();
         CreateMap<Stock, StockAddDto>().ReverseMap();
         CreateMap<Stock, StockUpdateDto>().ReverseMap();
         CreateMap<Stock, StockWithUserDto>().ReverseMap();
+        CreateMap<Stock, AddStockWithAcceptOrder>().ReverseMap();
 
         CreateMap<Company, CompanywithUsers>().ReverseMap();
         CreateMap<Company, CompanyAddDto>().ReverseMap();

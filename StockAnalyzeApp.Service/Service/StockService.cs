@@ -5,6 +5,7 @@ using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Service.Validator.StockValidators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,12 +50,13 @@ namespace StockAnalyzeApp.Service.Service
             
         }
 
-        public async Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(StockAddDto stockAddDto)
+        public async Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(AddStockWithAcceptOrder addStockWithAcceptOrder)
         {
-            var stock = _mapper.Map<Stock>(stockAddDto);
+            var stock = _mapper.Map<Stock>(addStockWithAcceptOrder);
             var res = _stockRepository.StockIds();
             var orderRes = _orderRepository.GetOrderCodes();
             var stockOrderRes = _stockRepository.ContainsOrderCode();
+            var order = await _orderRepository.GetWithOrderCode(stock.OrderCode);
             if (res.Contains(stock.StockCode))
             {
                 return CustomResponseDto<Stock>.Fail("Stock code must be unique", 400);
@@ -73,7 +75,11 @@ namespace StockAnalyzeApp.Service.Service
                     }
                     else
                     {
-                        await _stockRepository.AddAsync(stock);
+                        stock.UserId = order.UserId;
+                        stock.Quantity = order.Quantity;
+                        stock.StockCode = $"{stock.OrderCode}{stock.Quantity}";
+                        await _stockRepository.CheckAndAcceptOrder(stock);
+
                         await _unitOfWork.CommitAsync();
                         return CustomResponseDto<Stock>.Success(stock, 200);
                     }
@@ -102,9 +108,9 @@ namespace StockAnalyzeApp.Service.Service
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto,200);
         }
 
-        public async Task<CustomResponseDto<IEnumerable<StockDto>>> GetNoStocks()
+        public async Task<CustomResponseDto<IEnumerable<StockDto>>> GetDontHaveStocks()
         {
-            var response = await _stockRepository.GetNoStocks();
+            var response = await _stockRepository.GetDontHaveStocks();
             var dto = _mapper.Map<IEnumerable<StockDto>>(response);
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto, 200);
         }
