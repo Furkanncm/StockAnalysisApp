@@ -16,26 +16,19 @@ public class MapProfile : Profile
         CreateMap<User, UserInfoDto>().ReverseMap();
         CreateMap<User,UserWithStocksDto>().ReverseMap();
 
-
-
         CreateMap<Order, OrderDto>().ReverseMap();
         CreateMap<Order, OrderAddDto>().ReverseMap();
         CreateMap<Order, OrderUpdateDto>().ReverseMap();
         CreateMap<Order, OrderInfoDto>().ReverseMap();
         CreateMap<Order, OrderWithUserDto>().ReverseMap();
 
-
         CreateMap<Stock, StockDto>().ReverseMap();
         CreateMap<Stock, StockAddDto>().ReverseMap();
         CreateMap<Stock, StockUpdateDto>().ReverseMap();
         CreateMap<Stock, StockWithUserDto>().ReverseMap();
 
-
         CreateMap<Company, CompanywithUsers>().ReverseMap();
         CreateMap<Company, CompanyAddDto>().ReverseMap();
         CreateMap<Company, CompanyDto>().ReverseMap();
-
-
-
     }
 }

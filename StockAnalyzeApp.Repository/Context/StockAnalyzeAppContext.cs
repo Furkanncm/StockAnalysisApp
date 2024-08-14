@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockAnalyzeApp.Repository
+namespace StockAnalyzeApp.Repository.Context
 {
-    public class StockAnalyzeAppContext:DbContext
+    public class StockAnalyzeAppContext : DbContext
     {
 
         public DbSet<Order> Orders { get; set; }
@@ -19,7 +19,7 @@ namespace StockAnalyzeApp.Repository
 
         public DbSet<Company> Companies { get; set; }
 
-        public StockAnalyzeAppContext(DbContextOptions<StockAnalyzeAppContext> options):base(options)
+        public StockAnalyzeAppContext(DbContextOptions<StockAnalyzeAppContext> options) : base(options)
         {
 
         }

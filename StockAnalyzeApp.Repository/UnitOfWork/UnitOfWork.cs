@@ -1,4 +1,5 @@
 ﻿using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -68,10 +68,17 @@ namespace StockAnalyzeApp.Controllers
             }
         }
 
-        [HttpPost("[action]/{barcode}/{quantity}")]
-        public async Task<IActionResult> AddStockWithBarcode(int barcode, int quantity)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CheckAndAcceptOrder( StockAddDto stockAddDto)
         {
-            var response = await _stockService.ChangeQuantityStockWithBarcode(barcode, quantity);
+            var response = await _stockService.CheckAndAcceptOrder(stockAddDto);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]/{StockCode}/{quantity}")]
+        public async Task<IActionResult> ChangeQuantityStockWithBarcode(int StockCode, int quantity)
+        {
+            var response = await _stockService.ChangeQuantityStockWithBarcode(StockCode, quantity);
             return Ok(response);
         }
 

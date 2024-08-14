@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace StockAnalyzeApp.Core.Dto.StockDtos
@@ -16,7 +17,7 @@ namespace StockAnalyzeApp.Core.Dto.StockDtos
         public int StockCode { get; set; }
 
         public int Quantity { get; set; }
+        public string OrderCode { get; set; }
 
-      
     }
 }

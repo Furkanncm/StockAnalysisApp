@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockAnalyzeApp.Core.Dto;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
+using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
+using StockAnalyzeApp.Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,5 +54,23 @@ namespace StockAnalyzeApp.Repository.Repository
             return result;
         }
 
+        public async Task CheckAndAcceptOrder(Stock stock)
+        {
+            await _context.Stock.AddAsync(new Stock
+            {
+                Name = stock.Name,
+                Quantity = stock.Quantity,
+                StockCode = stock.StockCode,
+                Type = stock.Type,
+                UserId = stock.UserId,
+                OrderCode=stock.OrderCode
+            });
+        }
+
+        public List<string> ContainsOrderCode()
+        {
+           var result= _context.Stock.Select(x => x.OrderCode).ToList();
+            return result;
+        }
     }
 }

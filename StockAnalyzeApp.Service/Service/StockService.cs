@@ -16,11 +16,13 @@ namespace StockAnalyzeApp.Service.Service
     public class StockService : Service<Stock>, IStockService
     {
         private readonly IStockRepository _stockRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper    _mapper;
-        public StockService(IUnitOfWork unitOfWork, IGenericRepository<Stock> repository, IStockRepository stockRepository, IMapper mapper) : base(unitOfWork, repository)
+        public StockService(IUnitOfWork unitOfWork, IGenericRepository<Stock> repository, IStockRepository stockRepository, IMapper mapper, IOrderRepository orderRepository) : base(unitOfWork, repository)
         {
             _stockRepository=stockRepository;
             _mapper=mapper;
+            _orderRepository=orderRepository;
         }
 
         public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(int barcode,int quantity)
@@ -45,6 +47,45 @@ namespace StockAnalyzeApp.Service.Service
                 
             }
             
+        }
+
+        public async Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(StockAddDto stockAddDto)
+        {
+            var stock = _mapper.Map<Stock>(stockAddDto);
+            var res = _stockRepository.StockIds();
+            var orderRes = _orderRepository.GetOrderCodes();
+            var stockOrderRes = _stockRepository.ContainsOrderCode();
+            if (res.Contains(stock.StockCode))
+            {
+                return CustomResponseDto<Stock>.Fail("Stock code must be unique", 400);
+            }
+            else
+            {
+                if (!orderRes.Contains(stock.OrderCode))
+                {
+                    return CustomResponseDto<Stock>.Fail("Order code not found", 404);
+                }
+                else
+                {
+                    if(stockOrderRes.Contains(stock.OrderCode))
+                        {
+                        return CustomResponseDto<Stock>.Fail("This Order Already Stocked", 400);
+                    }
+                    else
+                    {
+                        await _stockRepository.AddAsync(stock);
+                        await _unitOfWork.CommitAsync();
+                        return CustomResponseDto<Stock>.Success(stock, 200);
+                    }
+                }
+            }
+            
+        }
+
+        public List<string> ContainsOrderCode()
+        {
+            var response = _stockRepository.ContainsOrderCode();    
+            return response;
         }
 
         public async Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(int stockCode)

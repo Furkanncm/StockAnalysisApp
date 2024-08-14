@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
+using StockAnalyzeApp.Repository.Context;
 
 namespace StockAnalyzeApp.Repository.Repository
 {

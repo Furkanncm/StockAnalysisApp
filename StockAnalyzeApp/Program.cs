@@ -7,13 +7,13 @@ using Quartz;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
-using StockAnalyzeApp.Repository;
 using StockAnalyzeApp.Repository.Repository;
 using StockAnalyzeApp.Repository.UnitOfWork;
 using StockAnalyzeApp.Service.Service;
 using StockAnalyzeApp.Service.Validator.StockValidators;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using StockAnalyzeApp.Repository.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
