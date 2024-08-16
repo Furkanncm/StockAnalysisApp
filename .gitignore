@@ -13,6 +13,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Gizli dosyalar
+StockAnalyzeApp.Service/test-578bb-firebase-adminsdk-jsbm1-871ef92dcc.json
+
 # Mono auto generated files
 mono_crash.*
 
