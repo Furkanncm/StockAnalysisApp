@@ -13,7 +13,7 @@ public class NotificationController : ControllerBase
     }
 
     [HttpPost("send")]
-    public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request)
+    public async Task<IActionResult> SendNotification([FromBody]  NotificationRequest request)
     {
         await _firebaseService.SendNotificationAsync(request.Token, request.Title, request.Body);
         return Ok("Notification sent");
