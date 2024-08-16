@@ -364,3 +364,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/StockAnalyzeApp.Service/test-578bb-firebase-adminsdk-jsbm1-871ef92dcc.json
