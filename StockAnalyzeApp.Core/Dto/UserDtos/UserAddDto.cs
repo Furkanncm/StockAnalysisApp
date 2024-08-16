@@ -15,5 +15,7 @@ namespace StockAnalyzeApp.Core.Dto.UserDtos
         public int UserCode { get; set; }
 
         public int CompanyId { get; set; }
+
+        public string? DeviceToken { get; set; }
     }
 }

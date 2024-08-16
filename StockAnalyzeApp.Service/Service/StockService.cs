@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Auth;
 using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Repository.Repository;
 using StockAnalyzeApp.Service.Validator.StockValidators;
 using System;
 using System.Collections.Generic;
@@ -18,12 +20,14 @@ namespace StockAnalyzeApp.Service.Service
     {
         private readonly IStockRepository _stockRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMapper    _mapper;
-        public StockService(IUnitOfWork unitOfWork, IGenericRepository<Stock> repository, IStockRepository stockRepository, IMapper mapper, IOrderRepository orderRepository) : base(unitOfWork, repository)
+        public StockService(IUnitOfWork unitOfWork, IGenericRepository<Stock> repository, IStockRepository stockRepository, IMapper mapper, IOrderRepository orderRepository, IUserRepository userRepository) : base(unitOfWork, repository)
         {
             _stockRepository=stockRepository;
             _mapper=mapper;
             _orderRepository=orderRepository;
+            this.userRepository=userRepository;
         }
 
         public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(string barcode,int quantity)
@@ -79,8 +83,19 @@ namespace StockAnalyzeApp.Service.Service
                         stock.Quantity = order.Quantity;
                         stock.StockCode = $"{stock.OrderCode}{stock.Quantity}";
                         await _stockRepository.CheckAndAcceptOrder(stock);
-
                         await _unitOfWork.CommitAsync();
+
+                        var user = await userRepository.GetByIdAsync(stock.UserId);
+                        if (user?.DeviceToken != null)
+                        {
+                            var firebaseService = new FirebaseService();
+                            await firebaseService.SendNotificationAsync(
+                                user.DeviceToken,
+                                "Sipariş Kabul Edildi",
+                                "Sipariş kabul edildi ve stoklara eklendi."
+                            );
+                        }
+
                         return CustomResponseDto<Stock>.Success(stock, 200);
                     }
                 }

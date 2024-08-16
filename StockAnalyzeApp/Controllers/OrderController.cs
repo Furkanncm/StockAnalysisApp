@@ -57,7 +57,7 @@ namespace StockAnalyzeApp.Controllers
         {
             var order = mapper.Map<Order>(orderAddDto);
             var ids = orderService.GetOrderIds();
-            if (ids.Contains(order.UserId))
+            if (!ids.Contains(order.UserId))
             {
                 return Ok(CustomResponseDto<NoContentDto>.Fail("UserId is not valid", 400));
             }

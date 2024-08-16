@@ -53,7 +53,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CheckAndAcceptOrder(AddStockWithAcceptOrder addStockWithAcceptOrder)
+        public async Task<IActionResult> CheckAndAcceptOrder( AddStockWithAcceptOrder addStockWithAcceptOrder)
         {
             var response = await _stockService.CheckAndAcceptOrder(addStockWithAcceptOrder);
             return Ok(response);

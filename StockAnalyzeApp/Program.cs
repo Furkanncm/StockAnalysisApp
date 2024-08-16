@@ -44,7 +44,8 @@ builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<StockCheckJob>();
 builder.Services.AddSingleton(new JobSchedule(
     jobType: typeof(StockCheckJob),
-    cronExpression: "0 0/1 * 1/1 * ? *" // Her sabah saat 09:00'da çalýþacak.
+    cronExpression: "0/30 * * * * ?"
+// Her sabah saat 09:00'da çalýþacak.
 ));
 
 builder.Services.AddHostedService<QuartzHostedService>();
