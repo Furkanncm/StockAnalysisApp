@@ -10,5 +10,6 @@ namespace StockAnalyzeApp.Core.Dto.UserDtos
     public class UserInfoDto : UserResponseDto
     {
         public Company Company { get; set; }
+
     }
 }

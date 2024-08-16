@@ -21,5 +21,7 @@ namespace StockAnalyzeApp.Core.Models
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Stock> Stocks { get; set; }
+
+        public string? DeviceToken { get; set; }
     }
 }

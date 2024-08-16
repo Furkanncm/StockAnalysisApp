@@ -14,6 +14,7 @@ using StockAnalyzeApp.Service.Validator.StockValidators;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using StockAnalyzeApp.Repository.Context;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +51,7 @@ builder.Services.AddHostedService<QuartzHostedService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddSingleton<StockCheckJob>(); // Quartz Job
 
-
+builder.Services.AddScoped<FirebaseService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
