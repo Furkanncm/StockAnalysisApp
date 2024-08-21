@@ -30,22 +30,22 @@ namespace StockAnalyzeApp.Controllers
             return Ok(CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(responseDto, 200));
         }
 
-        [HttpGet("[action]/{OrderCode}")]
-        public async Task<IActionResult> GetWithOrderCode(string OrderCode)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetWithOrderCode([FromQuery] string OrderCode)
         {
             var response = await orderService.GetWithOrderCode(OrderCode);
             return Ok(response);
         }
 
-        [HttpGet("[action]/{OrderCode}")]
-        public async Task<IActionResult> GetOrderWithUsers(string    OrderCode)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetOrderWithUser([FromQuery] string OrderCode)
         {
-            var response = await orderService.GetOrderWithUsers(OrderCode);
+            var response = await orderService.GetOrderWithUser(OrderCode);
             return Ok(response);
         }
 
         [HttpGet("[action]/{price}")]
-        public async Task<IActionResult> GetGreaterTotalPriceOrder(int price)
+        public async Task<IActionResult> GetGreaterTotalPriceOrder([FromRoute] int price)
         {
             var response = await orderService.GetGreaterTotalPriceOrder(price);
             var responseDto = mapper.Map<IEnumerable<OrderInfoDto>>(response.Data);
@@ -53,7 +53,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(OrderAddDto orderAddDto)
+        public async Task<IActionResult> Add([FromBody] OrderAddDto orderAddDto)
         {
             var order = mapper.Map<Order>(orderAddDto);
             var ids = orderService.GetOrderIds();
@@ -61,7 +61,7 @@ namespace StockAnalyzeApp.Controllers
             {
                 return Ok(CustomResponseDto<NoContentDto>.Fail("UserId is not valid", 400));
             }
-            var ordercodes= orderService.GetOrderCodes();
+            var ordercodes = orderService.GetOrderCodes();
             if (ordercodes.Contains(order.OrderCode))
             {
                 return Ok(CustomResponseDto<NoContentDto>.Fail("OrderCode is not valid", 400));
@@ -72,7 +72,7 @@ namespace StockAnalyzeApp.Controllers
 
         [HttpPut]
 
-        public async Task<IActionResult> Update(OrderUpdateDto orderUpdateDto)
+        public async Task<IActionResult> Update([FromBody] OrderUpdateDto orderUpdateDto)
         {
             var order = mapper.Map<Order>(orderUpdateDto);
             var ids = orderService.GetOrderIds();
@@ -86,7 +86,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteWithOrderCode(int OrderCode)
+        public async Task<IActionResult> DeleteWithOrderCode([FromQuery] int OrderCode)
         {
             await orderService.Delete(OrderCode);
             return NoContent();

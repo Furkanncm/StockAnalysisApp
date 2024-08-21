@@ -36,16 +36,13 @@ builder.Services.AddDbContext<StockAnalyzeAppContext>(options =>
     });
 });
 
-// Quartz hizmetlerini ekleyin
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-// Quartz iþ ve trigger tanýmýný ekleyin
 builder.Services.AddSingleton<StockCheckJob>();
 builder.Services.AddSingleton(new JobSchedule(
     jobType: typeof(StockCheckJob),
-    cronExpression: "0/30 * * * * ?"
-// Her sabah saat 09:00'da çalýþacak.
+    cronExpression: "0 0 9 * * ?" //Every day at 9:00
 ));
 
 builder.Services.AddHostedService<QuartzHostedService>();
@@ -65,6 +62,8 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+
+
 
 
 builder.Services.AddControllers()

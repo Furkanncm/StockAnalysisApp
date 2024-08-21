@@ -25,5 +25,9 @@ namespace StockAnalyzeApp.Core.Repositories
 
         Task CheckAndAcceptOrder(Stock stock);
 
+        Task ChangeQuality(Stock stock);
+
+        Task<Stock> GetByStockCode(string stockCode);
+
     }
 }

@@ -72,5 +72,16 @@ namespace StockAnalyzeApp.Repository.Repository
            var result= _context.Stock.Select(x => x.OrderCode).ToList();
             return result;
         }
+
+        public async Task ChangeQuality(Stock stock)
+        {
+            _context.Stock.Update(stock);
+        }
+
+        public  Task<Stock> GetByStockCode(string stockCode)
+        {
+           var response= _context.Stock.FirstOrDefaultAsync(x => x.StockCode == stockCode);
+            return response;
+        }
     }
 }

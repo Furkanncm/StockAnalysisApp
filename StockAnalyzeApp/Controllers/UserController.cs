@@ -32,7 +32,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserById([FromRoute]int id)
         {
             var result = await _userService.GetByIdAsync(id);
             var responsedto = _mapper.Map<UserResponseDto>(result);
@@ -40,28 +40,28 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{UserCode}")]
-        public async Task<IActionResult> GetUserByUserCode(int UserCode)
+        public async Task<IActionResult> GetUserByUserCode([FromRoute]int UserCode)
         {
             var result = await _userService.GetUserByUserCode(UserCode);
             return Ok(result);
         }
 
         [HttpGet("[action]/{UserId}")]
-        public async Task<IActionResult> GetUsersOrders(int UserId)
+        public async Task<IActionResult> GetUsersOrders([FromRoute] int UserId)
         {
             var result = await _userService.GetUsersOrders(UserId);
             return Ok(result);
         }
 
         [HttpGet("[action]/{UserId}")]
-        public async Task<IActionResult> GetUsersStocks(int UserId)
+        public async Task<IActionResult> GetUsersStocks([FromRoute] int UserId)
         {
             var result = await _userService.GetUsersStocks(UserId);
             return Ok(result);
         }
 
         [HttpPost()]
-        public async Task<IActionResult> AddUsers(UserAddDto userAddDto)
+        public async Task<IActionResult> AddUsers([FromBody]UserAddDto userAddDto)
         {
             var entity = _mapper.Map<User>(userAddDto);
             var list=await companyService.GetCompanyIds();
@@ -77,15 +77,15 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPut()]
-        public async Task<IActionResult> UpdateUsers(UserUpdateDto userUpdateDto)
+        public async Task<IActionResult> UpdateUsers([FromBody]UserUpdateDto userUpdateDto)
         {
             var dto = _mapper.Map<User>(userUpdateDto);
-            var entity =  _userService.Update(dto);
+           await _userService.Update(dto);
             return Ok(CustomResponseDto<UserUpdateDto>.Success(userUpdateDto, 200));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsers(int id)
+        public async Task<IActionResult> DeleteUsers([FromRoute] int id)
         {
             var entity = await _userService.GetByIdAsync(id);
             await _userService.Delete(id);

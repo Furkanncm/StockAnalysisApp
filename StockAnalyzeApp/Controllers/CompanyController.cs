@@ -30,7 +30,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CompanyAddDto companyDto)
+        public async Task<IActionResult> Post([FromBody]CompanyAddDto companyDto)
         {
             var company = mapper.Map<Company>(companyDto);
             await _companyRepository.AddAsync(company);
@@ -38,7 +38,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             var response = await _companyRepository.GetByIdAsync(id);
             var dto = mapper.Map<CompanyDto>(response);
@@ -46,7 +46,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpGet("[action]/{companyId}")]
-        public async Task<IActionResult> GetCompanyUsers(int companyId)
+        public async Task<IActionResult> GetCompanyUsers([FromRoute]int companyId)
         {
             var response =await _companyRepository.GetCompanyUsers(companyId);
             var dto= mapper.Map<CompanywithUsers>(response);
@@ -54,7 +54,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(CompanyUpdateDto companyDto)
+        public async Task<IActionResult> Update([FromBody]CompanyUpdateDto companyDto)
         {
             var company = mapper.Map<Company>(companyDto);
              _companyRepository.Update(company);
@@ -62,7 +62,7 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
              _companyRepository.Delete(id);
             return Ok(CustomResponseDto<NoContentDto>.Success(204));

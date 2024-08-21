@@ -38,7 +38,7 @@ namespace StockAnalyzeApp.Repository.Repository
             return response;
         }
 
-        public async Task<Order> GetOrdersWithUsers(string OrderCode)
+        public async Task<Order> GetOrdersWithUser(string OrderCode)
         {
             var response =  await _context.Orders.Include(x => x.User).FirstOrDefaultAsync(x=>x.OrderCode==OrderCode);
             return response;

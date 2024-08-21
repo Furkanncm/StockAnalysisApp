@@ -42,9 +42,9 @@ namespace StockAnalyzeApp.Service.Service
             return response;
         }
 
-        public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUsers(string OrderCode)
+        public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUser(string OrderCode)
         {
-           var response= await orderRepository.GetOrdersWithUsers(OrderCode);
+           var response= await orderRepository.GetOrdersWithUser(OrderCode);
             var data = mapper.Map<OrderWithUserDto>(response);
             return CustomResponseDto<OrderWithUserDto>.Success(data,200);
         }

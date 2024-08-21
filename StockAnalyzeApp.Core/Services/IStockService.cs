@@ -16,7 +16,7 @@ namespace StockAnalyzeApp.Core.Services
         Task<CustomResponseDto<StockWithUserDto>> GetStockWithUser(string stockCode);
         Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(string stockCode);
 
-        Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(string barcode,int quantity);
+        Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(AddQuantityWithtStockCode addQuantityWithtStockCode);
 
         List<string> GetStockCodes();
 
@@ -24,5 +24,7 @@ namespace StockAnalyzeApp.Core.Services
 
         Task<CustomResponseDto<IEnumerable<StockDto>>> GetDontHaveStocks();
         Task<CustomResponseDto<Stock>> CheckAndAcceptOrder(AddStockWithAcceptOrder addStockWithAcceptOrder);
+
+        Task<CustomResponseDto<StockDto>> GetByStockCode(string stockCode);
     }
 }
