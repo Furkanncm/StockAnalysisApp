@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using StockAnalyzeApp.Repository.Context;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
+using StockAnalyzeApp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,7 +82,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
+app.ConfigureExceptionHandler();
 
 app.UseAuthorization();
 

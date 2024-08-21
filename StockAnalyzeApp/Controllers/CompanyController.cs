@@ -59,11 +59,6 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> Update([FromBody] CompanyUpdateDto companyDto)
         {
             var company = await _companyService.GetByIdAsync(companyDto.Id);
-            if (company == null)
-            {
-                return NotFound(CustomResponseDto<NoContentDto>.Fail( "Company not found", 404));
-            }
-
             var updatedCompany = _mapper.Map<Company>(company);
             updatedCompany.Name = companyDto.Name;
             updatedCompany.Address = companyDto.Address;

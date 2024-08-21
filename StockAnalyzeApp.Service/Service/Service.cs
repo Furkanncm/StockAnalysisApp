@@ -57,7 +57,15 @@ namespace StockAnalyzeApp.Service.Service
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var hasproduct= await _repository.GetByIdAsync(id);
+            if (hasproduct==null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                return hasproduct;
+            }
         }
 
         public async Task Update(T entity)

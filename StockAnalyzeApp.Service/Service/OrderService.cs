@@ -52,9 +52,15 @@ namespace StockAnalyzeApp.Service.Service
         public async Task<CustomResponseDto<OrderWithOrderCodeDto>> GetWithOrderCode(string OrderCode)
         {
             var response= await orderRepository.GetWithOrderCode(OrderCode);
-            var data = mapper.Map<OrderWithOrderCodeDto>(response);
-            return CustomResponseDto<OrderWithOrderCodeDto>.Success(data,200);
-           
+            if (response==null)
+            {
+                throw new Exception();
+            }
+            else
+            {
+                var data = mapper.Map<OrderWithOrderCodeDto>(response);
+                return CustomResponseDto<OrderWithOrderCodeDto>.Success(data, 200);
+            }
         }
     }
 }
