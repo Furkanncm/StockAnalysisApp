@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeApp.Core.Dto.CompanyDtos
 {
-    public class CompanyDto:CompanyAddDto
+    public class CompanyDto:BaseCompanyDto
     {
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public int Id { get; set; }
+        
+
     }
 }

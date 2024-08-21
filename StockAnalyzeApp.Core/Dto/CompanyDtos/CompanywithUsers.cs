@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeApp.Core.Dto.CompanyDtos
 {
-    public class CompanywithUsers:CompanyAddDto
+    public class CompanywithUsers:BaseCompanyDto
     {
         public ICollection<UserResponseDto> Users { get; set; }
     }

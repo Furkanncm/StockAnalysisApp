@@ -35,5 +35,6 @@ public class MapProfile : Profile
         CreateMap<Company, CompanywithUsers>().ReverseMap();
         CreateMap<Company, CompanyAddDto>().ReverseMap();
         CreateMap<Company, CompanyDto>().ReverseMap();
+        CreateMap<Company, CompanyUpdateDto>().ReverseMap();
     }
 }
