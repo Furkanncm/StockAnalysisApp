@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeCache.CacheServices
 {
-    public class OrderCacheService : IOrderService
+    public class OrderCacheService : CacheManager<Order>, IOrderService
     {
         private const string OrderCacheKey = "OrderCacheKey";
         private const string OrderWithUserKey = "OrderWithUserKey";
@@ -24,7 +24,7 @@ namespace StockAnalyzeCache.CacheServices
         private readonly IUnitOfWork unitOfWork;
         private readonly IMemoryCache memoryCache;
 
-        public OrderCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IOrderRepository orderRepository)
+        public OrderCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IOrderRepository orderRepository) : base(memoryCache, unitOfWork)
         {
             this.memoryCache=memoryCache;
             this.unitOfWork=unitOfWork;
@@ -32,72 +32,69 @@ namespace StockAnalyzeCache.CacheServices
             this.orderRepository=orderRepository;
 
 
-            if(!memoryCache.TryGetValue(OrderCacheKey, out _))
+            if (!memoryCache.TryGetValue(OrderCacheKey, out _))
             {
-                var response=orderRepository.GetAll();
-                memoryCache.Set(OrderCacheKey, response);  
+                CacheAll(orderRepository, OrderCacheKey);
             }
 
         }
 
         public void CacheAllOrder(string cacheKey)
         {
-            memoryCache.Remove(cacheKey);
-            var response= orderRepository.GetAll();
-            memoryCache.Set(cacheKey, response);
+            CacheAll(orderRepository, cacheKey);
         }
         public async Task AddAsync(Order entity)
         {
             await orderRepository.AddAsync(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task AddRangeAsync(IEnumerable<Order> entities)
         {
-           await orderRepository.AddRangeAsync(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await orderRepository.AddRangeAsync(entities);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task Delete(int id)
         {
             orderRepository.Delete(id);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task DeleteAll(Order entity)
         {
             orderRepository.DeleteAll(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task DeleteRange(IEnumerable<Order> entities)
         {
             orderRepository.DeleteRange(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
             CacheAllOrder(OrderCacheKey);
-            return await orderRepository.GetAllAsync();
+            var response= await orderRepository.GetAllAsync();
+            CheckNullability(response, "There is no Order");
+            return response;
         }
 
         public Task<Order> GetByIdAsync(int id)
         {
             CacheAllOrder(OrderCacheKey);
-            return orderRepository.GetByIdAsync(id);
+            var response= orderRepository.GetByIdAsync(id);
+            CheckNullability(response, $"This {id} is Invalid");
+            return response;
         }
 
         public async Task<CustomResponseDto<IEnumerable<OrderInfoDto>>> GetGreaterTotalPriceOrder(int price)
         {
             CacheAllOrder(OrderCacheKey);
-            var response= await orderRepository.GetGreaterTotalPriceOrder(price);
-            var dto= mapper.Map<IEnumerable<OrderInfoDto>>(response);
+            var response = await orderRepository.GetGreaterTotalPriceOrder(price);
+            CheckNullability(response, "There is no Order");
+            var dto = mapper.Map<IEnumerable<OrderInfoDto>>(response);
             return CustomResponseDto<IEnumerable<OrderInfoDto>>.Success(dto, 200);
         }
 
@@ -114,31 +111,31 @@ namespace StockAnalyzeCache.CacheServices
         public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUser(string OrderCode)
         {
             CacheAllOrder(OrderWithUserKey);
-            var response= await orderRepository.GetOrdersWithUser(OrderCode);
-            var dto= mapper.Map<OrderWithUserDto>(response);
+            var response = await orderRepository.GetOrdersWithUser(OrderCode);
+            await CheckNullability(Task.FromResult(response), "There is no Order");
+            var dto = mapper.Map<OrderWithUserDto>(response);
             return CustomResponseDto<OrderWithUserDto>.Success(dto, 200);
         }
 
         public async Task<CustomResponseDto<OrderWithOrderCodeDto>> GetWithOrderCode(string OrderCode)
         {
             CacheAllOrder(OrderCacheKey);
-            var response= await orderRepository.GetWithOrderCode(OrderCode); 
-            var dto= mapper.Map<OrderWithOrderCodeDto>(response);
+            var response = await orderRepository.GetWithOrderCode(OrderCode);
+            await CheckNullability(Task.FromResult(response), "There is no Order");
+            var dto = mapper.Map<OrderWithOrderCodeDto>(response);
             return CustomResponseDto<OrderWithOrderCodeDto>.Success(dto, 200);
         }
 
         public async Task Update(Order entity)
         {
             orderRepository.Update(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
 
         public async Task UpdateRange(IEnumerable<Order> entities)
         {
             orderRepository.UpdateRange(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(OrderCacheKey);
+            await CommitAndRemoveCache(OrderCacheKey);
         }
     }
 }

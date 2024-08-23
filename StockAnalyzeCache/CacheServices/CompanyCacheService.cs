@@ -8,6 +8,7 @@ using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeCache.CacheServices
 {
-    public class CompanyCacheService : ICompanyService
+    public class CompanyCacheService : CacheManager<Company>, ICompanyService
     {
         private readonly ICompanyRepository companyRepository;
         private readonly IMapper mapper;
@@ -24,8 +25,9 @@ namespace StockAnalyzeCache.CacheServices
         private const string CompanyWithUserskey = "CompanyWithUserskey";
         private const string CompanyCacheKey = "CompanyCacheKey";
 
-        public CompanyCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, ICompanyRepository companyRepository)
+        public CompanyCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, ICompanyRepository companyRepository) : base(memoryCache, unitOfWork)
         {
+
             this.memoryCache=memoryCache;
             this.unitOfWork=unitOfWork;
             this.mapper=mapper;
@@ -33,64 +35,60 @@ namespace StockAnalyzeCache.CacheServices
 
             if (!memoryCache.TryGetValue(CompanyCacheKey, out _))
             {
-                var response = companyRepository.GetAll();
-                memoryCache.Set(CompanyCacheKey, response);
+                CacheAll(companyRepository, CompanyCacheKey);
             }
         }
 
         public void CacheAllCompany(string cacheKey)
         {
-            memoryCache.Remove(cacheKey);
-            var response = companyRepository.GetAll().ToList();
-            memoryCache.Set(cacheKey, response);
+            CacheAll(companyRepository, cacheKey);
         }
         public async Task AddAsync(Company entity)
         {
             await companyRepository.AddAsync(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
 
         public async Task AddRangeAsync(IEnumerable<Company> entities)
         {
             await companyRepository.AddRangeAsync(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
         public async Task Delete(int id)
         {
             companyRepository.Delete(id);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
         public async Task DeleteAll(Company entity)
         {
             companyRepository.DeleteAll(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
         public async Task DeleteRange(IEnumerable<Company> entities)
         {
             companyRepository.DeleteRange(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
         public async Task<IEnumerable<Company>> GetAllAsync()
         {
             CacheAllCompany(CompanyCacheKey);
-            return await companyRepository.GetAllAsync();
+            var response = await companyRepository.GetAllAsync();
+            CheckNullability(response, $"There is no Company here");
+            return response;
 
         }
 
         public Task<Company> GetByIdAsync(int id)
         {
             CacheAllCompany(CompanyCacheKey);
-            return companyRepository.GetByIdAsync(id);
+            var response = companyRepository.GetByIdAsync(id);
+            CheckNullability(response, $"This {id} is Invalid");
+            return response;
         }
 
         public Task<List<int>> GetCompanyIds()
@@ -103,7 +101,8 @@ namespace StockAnalyzeCache.CacheServices
         public async Task<CustomResponseDto<CompanywithUsers>> GetCompanyUsers(int companyId)
         {
             CacheAllCompany(CompanyWithUserskey);
-            var response= await companyRepository.GetCompanyUsers(companyId);
+            var response = await companyRepository.GetCompanyUsers(companyId);
+            await CheckNullability(Task.FromResult(response), $"This {companyId} is Invalid");
             var dto = mapper.Map<CompanywithUsers>(response);
             return CustomResponseDto<CompanywithUsers>.Success(dto, 200);
 
@@ -112,15 +111,13 @@ namespace StockAnalyzeCache.CacheServices
         public async Task Update(Company entity)
         {
             companyRepository.Update(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
 
         public async Task UpdateRange(IEnumerable<Company> entities)
         {
             companyRepository.UpdateRange(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(CompanyCacheKey);
+            await CommitAndRemoveCache(CompanyCacheKey);
         }
     }
 }

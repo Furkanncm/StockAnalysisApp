@@ -39,11 +39,11 @@ namespace StockAnalyzeCache.CacheServices
 
             if (!memoryCache.TryGetValue(stockCacheKey, out _))
             {
-                var response = stockRepository.GetAll().ToList();
+                var response = stockRepository.GetAll();
                 memoryCache.Set(stockCacheKey, response);
             }
 
-      
+
         }
 
         public async Task<Stock> CheckNullability(Task<Stock> stock, String ErrorMessage)

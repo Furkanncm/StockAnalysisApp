@@ -59,7 +59,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStockService, StockCacheService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped(typeof(StockAnalyzeAppContext));
-
+builder.Services.AddScoped(typeof(ICacheManager<>),typeof(CacheManager<>));
 builder.Services.AddScoped<IOrderService, OrderCacheService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyCacheService>();
