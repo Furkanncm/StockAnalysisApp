@@ -62,7 +62,7 @@ builder.Services.AddScoped(typeof(StockAnalyzeAppContext));
 
 builder.Services.AddScoped<IOrderService, OrderCacheService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<ICompanyService, CompanyCacheService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 //builder.Services.Add(new ServiceDescriptor(typeof(IUserService), typeof(UserService)));
 

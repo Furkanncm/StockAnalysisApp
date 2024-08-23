@@ -36,7 +36,8 @@ namespace StockAnalyzeApp.Controllers
             var company = _mapper.Map<Company>(companyDto);
             company.CreatedDate = DateTime.Now;
             await _companyService.AddAsync(company);
-            return Ok(CustomResponseDto<NoContentDto>.Success(200));
+            var dto = _mapper.Map<CompanyAddDto>(company);
+            return Ok(CustomResponseDto<CompanyAddDto>.Success(dto, 200));
         }
 
         [HttpGet("{id}")]
@@ -51,8 +52,7 @@ namespace StockAnalyzeApp.Controllers
         public async Task<IActionResult> GetCompanyUsers([FromRoute]int companyId)
         {
             var response =await _companyService.GetCompanyUsers(companyId);
-            var dto= _mapper.Map<CompanywithUsers>(response);
-            return Ok(CustomResponseDto<CompanywithUsers>.Success(dto,200));
+            return Ok(response);
         }
 
         [HttpPut]
@@ -63,9 +63,8 @@ namespace StockAnalyzeApp.Controllers
             updatedCompany.Name = companyDto.Name;
             updatedCompany.Address = companyDto.Address;
             company.UpdatedDate = DateTime.Now;
-
             await _companyService.Update(updatedCompany);
-            return Ok(CustomResponseDto<NoContentDto>.Success(200));
+            return Created();
         }
 
 

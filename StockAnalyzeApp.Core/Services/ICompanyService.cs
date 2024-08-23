@@ -14,6 +14,7 @@ namespace StockAnalyzeApp.Core.Services
         Task<CustomResponseDto<CompanywithUsers>> GetCompanyUsers(int companyId);
 
         Task<List<int>> GetCompanyIds();
+
     }
 
 }
