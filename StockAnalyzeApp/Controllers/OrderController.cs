@@ -86,9 +86,9 @@ namespace StockAnalyzeApp.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteWithOrderCode([FromQuery] int OrderCode)
+        public async Task<IActionResult> DeleteWithOrderCode([FromQuery] int id)
         {
-            await orderService.Delete(OrderCode);
+            await orderService.Delete(id);
             return NoContent();
         }
 
