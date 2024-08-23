@@ -34,6 +34,8 @@ namespace StockAnalyzeCache.CacheServices
             this.unitOfWork=unitOfWork;
             this.mapper=mapper;
             this.stockRepository=stockRepository;
+            this.orderRepository=orderRepository;
+            this.userRepository=userRepository;
 
             if (!memoryCache.TryGetValue(stockCacheKey, out _))
             {
@@ -41,8 +43,7 @@ namespace StockAnalyzeCache.CacheServices
                 memoryCache.Set(stockCacheKey, response);
             }
 
-            this.orderRepository=orderRepository;
-            this.userRepository=userRepository;
+      
         }
 
         public async Task<Stock> CheckNullability(Task<Stock> stock, String ErrorMessage)

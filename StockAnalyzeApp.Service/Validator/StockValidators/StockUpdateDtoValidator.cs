@@ -13,7 +13,6 @@ namespace StockAnalyzeApp.Service.Validator.StockValidators
         public StockUpdateDtoValidator()
         {
             RuleFor(x => x.Id).NotEmpty().WithMessage("Id must not be empty");
-            RuleFor(x => x.StockCode).NotEmpty().WithMessage("StockCode Code must not be empty");
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name must not be empty");
             RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId Name must not be empty");
             RuleFor(x => x.Quantity).NotEmpty().WithMessage("Quantity must not be empty").GreaterThan(0).WithMessage("Quantity must not equals to 0");

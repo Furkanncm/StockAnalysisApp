@@ -34,7 +34,6 @@ namespace StockAnalyzeApp.Service.Service
             var response =await _companyRepository.GetCompanyUsers(companyId);
             var dto= mapper.Map<CompanywithUsers>(response);
             return CustomResponseDto<CompanywithUsers>.Success(dto,200);
-
         }
     }
 }

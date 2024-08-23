@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
 using StockAnalyzeApp.Core.Models;
@@ -81,7 +82,22 @@ public class StockController : ControllerBase
     public async Task<IActionResult> Update([FromBody] StockUpdateDto stockUpdateDto)
     {
         var stock = _mapper.Map<Stock>(stockUpdateDto);
-        await _stockService.Update(stock);
+
+
+        try
+        {
+            await _stockService.Update(stock);
+        }
+        catch (DbUpdateException ex)
+        {
+            // Inner exception'ı görmek için
+            var innerException = ex.InnerException?.Message;
+            Console.WriteLine(innerException);
+
+            // Hata ile ilgili daha detaylı bilgiyi loglayın veya gösterin
+            throw new Exception("Veritabanı hatası oluştu: " + innerException);
+        }
+
         return NoContent();
     }
 
