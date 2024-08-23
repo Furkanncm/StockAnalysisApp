@@ -10,6 +10,7 @@ namespace StockAnalyzeApp.Core.Repositories
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
+
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
         void Delete(int id);
@@ -17,7 +18,7 @@ namespace StockAnalyzeApp.Core.Repositories
         void DeleteAll(T entity);
         void Update(T entity);
         void UpdateRange(IEnumerable<T> entities);
-
+        public IEnumerable<T> GetAll();
         Task<IEnumerable<int>> GetValidIdsAsync();
     }
 }

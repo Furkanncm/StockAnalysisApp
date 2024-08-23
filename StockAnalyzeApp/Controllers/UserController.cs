@@ -26,10 +26,11 @@ namespace StockAnalyzeApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            var result = await _userService.GetAllAsync();
-            var responsedto = _mapper.Map<IEnumerable<UserResponseDto>>(result);
-            return Ok(CustomResponseDto<IEnumerable<UserResponseDto>>.Success(responsedto, 200));
+            var users = await _userService.GetAllAsync();
+            var responseDto = _mapper.Map<IEnumerable<UserResponseDto>>(users); // Listeye çevirdiğimizden emin olun
+            return Ok(CustomResponseDto<IEnumerable<UserResponseDto>>.Success(responseDto, 200));
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute]int id)

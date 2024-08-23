@@ -22,6 +22,7 @@ namespace StockAnalyzeApp.Repository.Repository
         }
 
 
+     
         public async Task AddAsync(T entity)
         {
            await  _dbSet.AddAsync(entity);
@@ -52,6 +53,10 @@ namespace StockAnalyzeApp.Repository.Repository
             return  _dbSet.AsNoTracking().AsQueryable();
         }
 
+        public IEnumerable<T> GetAll()
+        {
+            return _dbSet.AsNoTracking().AsQueryable().ToList();
+        }
         public async Task<T> GetByIdAsync(int id)
         {
            return await _dbSet.FindAsync(id);
@@ -71,5 +76,7 @@ namespace StockAnalyzeApp.Repository.Repository
         {
             throw new NotImplementedException();
         }
+
+ 
     }
 }
