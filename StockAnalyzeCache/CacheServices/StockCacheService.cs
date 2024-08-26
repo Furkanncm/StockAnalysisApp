@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.StockDtos;
@@ -6,6 +7,7 @@ using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Repository.Context;
 using StockAnalyzeApp.Repository.Repository;
 using StockAnalyzeApp.Repository.UnitOfWork;
 using System;
@@ -17,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeCache.CacheServices
 {
-    public class StockCacheService : IStockService
+    public class StockCacheService : CacheManager<Stock>,IStockService
     {
         private const string stockCacheKey = "StockCacheKey";
         private const string stockWithUserKey = "stockWithUserKey";
@@ -27,8 +29,9 @@ namespace StockAnalyzeCache.CacheServices
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMemoryCache memoryCache;
+        private readonly StockAnalyzeAppContext context;
 
-        public StockCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IStockRepository stockRepository, IOrderRepository orderRepository, IUserRepository userRepository)
+        public StockCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IStockRepository stockRepository, IOrderRepository orderRepository, IUserRepository userRepository, StockAnalyzeAppContext context):base(memoryCache,unitOfWork)
         {
             this.memoryCache=memoryCache;
             this.unitOfWork=unitOfWork;
@@ -36,58 +39,21 @@ namespace StockAnalyzeCache.CacheServices
             this.stockRepository=stockRepository;
             this.orderRepository=orderRepository;
             this.userRepository=userRepository;
+            this.context=context;
 
-            if (!memoryCache.TryGetValue(stockCacheKey, out _))
-            {
-                var response = stockRepository.GetAll();
-                memoryCache.Set(stockCacheKey, response);
-            }
-
+            CacheAll(stockRepository, stockCacheKey);
 
         }
-
-        public async Task<Stock> CheckNullability(Task<Stock> stock, String ErrorMessage)
-        {
-            if (stock.Result==null)
-            {
-                throw new Exception(message: ErrorMessage);
-            }
-            else
-            {
-                return await stock;
-            }
-        }
-        public IEnumerable<Stock> CheckNullability(IEnumerable<Stock> stock, String ErrorMessage)
-        {
-            if (stock==null)
-            {
-                throw new Exception(message: ErrorMessage);
-            }
-            else
-            {
-                return stock;
-            }
-        }
-
-        public void CacheAllStocks(string CacheKey)
-        {
-            memoryCache.Remove(CacheKey);
-            var response = stockRepository.GetAll().ToList();
-            memoryCache.Set(CacheKey, response);
-        }
-
         public async Task AddAsync(Stock entity)
         {
             await stockRepository.AddAsync(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task AddRangeAsync(IEnumerable<Stock> entities)
         {
             await stockRepository.AddRangeAsync(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task<CustomResponseDto<StockDto>> ChangeQuantityStockWithBarcode(AddQuantityWithtStockCode addQuantityWithtStockCode)
@@ -95,9 +61,8 @@ namespace StockAnalyzeCache.CacheServices
             var response = await stockRepository.GetByStockCode(addQuantityWithtStockCode.StockCode);
             response.Quantity += addQuantityWithtStockCode.Quantity;
             response.StockCode = $"{response.OrderCode}{response.Quantity}";
-            await unitOfWork.CommitAsync();
             var dto2 = mapper.Map<StockDto>(response);
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
             return CustomResponseDto<StockDto>.Success(dto2, 200);
         }
 
@@ -129,9 +94,9 @@ namespace StockAnalyzeCache.CacheServices
                         stock.UserId = order.UserId;
                         stock.Quantity = order.Quantity;
                         stock.StockCode = $"{stock.OrderCode}{stock.Quantity}";
+                        stock.CreatedDate = DateTime.Now;
                         await stockRepository.CheckAndAcceptOrder(stock);
-                        await unitOfWork.CommitAsync();
-
+                        await CommitAndRemoveCache(stockCacheKey);
                         var user = await userRepository.GetByIdAsync(stock.UserId);
                         if (user?.DeviceToken != null)
                         {
@@ -158,36 +123,32 @@ namespace StockAnalyzeCache.CacheServices
         public async Task Delete(int id)
         {
             stockRepository.Delete(id);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task DeleteAll(Stock entity)
         {
             stockRepository.DeleteAll(entity);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task DeleteRange(IEnumerable<Stock> entities)
         {
             stockRepository.DeleteRange(entities);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task<CustomResponseDto<NoContentDto>> DeleteWithStockCode(string stockCode)
         {
             await stockRepository.DeleteWithStocCode(stockCode);
-            await unitOfWork.CommitAsync();
-            memoryCache.Remove(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
             return CustomResponseDto<NoContentDto>.Success(200);
 
         }
 
         public Task<IEnumerable<Stock>> GetAllAsync()
         {
-            CacheAllStocks(stockCacheKey);
+            CacheAll(stockRepository, stockCacheKey);
             var result = stockRepository.GetAll().ToList();
             var response = CheckNullability(result, "Got Zero Stocks");
             return Task.FromResult(response);
@@ -195,7 +156,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public Task<Stock> GetByIdAsync(int id)
         {
-            CacheAllStocks(stockCacheKey);
+            CacheAll(stockRepository, stockCacheKey);
             var result = stockRepository.GetByIdAsync(id);
             var response = CheckNullability(result, "Stock's Not Valid");
             return response;
@@ -203,7 +164,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<CustomResponseDto<StockDto>> GetByStockCode(string stockCode)
         {
-            CacheAllStocks(stockCacheKey);
+            CacheAll(stockRepository, stockCacheKey);
             var result = await stockRepository.GetByStockCode(stockCode);
             var response = await CheckNullability(Task.FromResult(result), $"{stockCode} is Not Valid");
             var dto = mapper.Map<StockDto>(result);
@@ -213,7 +174,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<CustomResponseDto<IEnumerable<StockDto>>> GetDontHaveStocks()
         {
-            CacheAllStocks(stockCacheKey);
+            CacheAll(stockRepository, stockCacheKey);
             var response = await stockRepository.GetDontHaveStocks();
             var dto = mapper.Map<IEnumerable<StockDto>>(response);
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto, 200);
@@ -221,7 +182,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<CustomResponseDto<IEnumerable<StockDto>>> GetLessThan(int quantity)
         {
-            CacheAllStocks(stockCacheKey);
+            CacheAll(stockRepository, stockCacheKey);
             var response = await stockRepository.GetLessThan(quantity);
             var dto = mapper.Map<IEnumerable<StockDto>>(response);
             return CustomResponseDto<IEnumerable<StockDto>>.Success(dto, 200);
@@ -238,7 +199,7 @@ namespace StockAnalyzeCache.CacheServices
 
             if (!memoryCache.TryGetValue(stockCode, out _))
             {
-                CacheAllStocks(stockWithUserKey);
+                CacheAll(stockRepository, stockWithUserKey);
             }
             var response = await stockRepository.GetStockWithUser(stockCode);
             var dto = mapper.Map<StockWithUserDto>(response);
@@ -248,16 +209,19 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task Update(Stock entity)
         {
+            var response = await context.Stock.AsNoTracking().FirstOrDefaultAsync(o => o.Id == entity.Id);
+            entity.CreatedDate = response.CreatedDate;
+            entity.UpdatedDate=DateTime.Now;
+            entity.StockCode = response.StockCode;
+            entity.OrderCode = response.OrderCode;
             stockRepository.Update(entity);
-            await unitOfWork.CommitAsync();
-            CacheAllStocks(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
 
         public async Task UpdateRange(IEnumerable<Stock> entities)
         {
             stockRepository.UpdateRange(entities);
-            await unitOfWork.CommitAsync();
-            CacheAllStocks(stockCacheKey);
+            await CommitAndRemoveCache(stockCacheKey);
         }
     }
 }

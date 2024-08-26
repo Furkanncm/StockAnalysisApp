@@ -16,7 +16,6 @@ namespace StockAnalyzeApp.Repository.Configuration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).IsRequired();
             builder.HasIndex(x => x.OrderCode).IsUnique();
-            builder.Property(x => x.OrderCode).IsRequired();
             builder.Property(x => x.UserId).IsRequired();
             builder.Property(x => x.Quantity).IsRequired();
             builder.Property(x => x.Price).IsRequired().HasPrecision(18,2);

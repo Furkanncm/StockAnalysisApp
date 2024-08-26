@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeApp.Core.Dto.OrderDtos
 {
-    public class OrderDto
+    public class OrderDto : BaseOrderDto
     {
         public int Id { get; set; }
-        public string OrderCode { get; set; }
-
-        public int Quantity { get; set; }
-
         public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; } // Eklenen özellik
     }
 }

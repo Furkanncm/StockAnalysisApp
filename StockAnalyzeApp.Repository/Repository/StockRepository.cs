@@ -63,7 +63,8 @@ namespace StockAnalyzeApp.Repository.Repository
                 StockCode = stock.StockCode,
                 Type = stock.Type,
                 UserId = stock.UserId,
-                OrderCode=stock.OrderCode
+                OrderCode=stock.OrderCode,
+                CreatedDate = DateTime.Now,
             });
         }
 

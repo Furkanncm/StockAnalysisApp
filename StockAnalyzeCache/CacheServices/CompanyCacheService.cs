@@ -33,16 +33,9 @@ namespace StockAnalyzeCache.CacheServices
             this.mapper=mapper;
             this.companyRepository=companyRepository;
 
-            if (!memoryCache.TryGetValue(CompanyCacheKey, out _))
-            {
-                CacheAll(companyRepository, CompanyCacheKey);
-            }
+            CacheAll(companyRepository, CompanyCacheKey);
         }
 
-        public void CacheAllCompany(string cacheKey)
-        {
-            CacheAll(companyRepository, cacheKey);
-        }
         public async Task AddAsync(Company entity)
         {
             await companyRepository.AddAsync(entity);
@@ -76,7 +69,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<IEnumerable<Company>> GetAllAsync()
         {
-            CacheAllCompany(CompanyCacheKey);
+            CacheAll(companyRepository,CompanyCacheKey);
             var response = await companyRepository.GetAllAsync();
             CheckNullability(response, $"There is no Company here");
             return response;
@@ -85,7 +78,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public Task<Company> GetByIdAsync(int id)
         {
-            CacheAllCompany(CompanyCacheKey);
+            CacheAll(companyRepository, CompanyCacheKey);
             var response = companyRepository.GetByIdAsync(id);
             CheckNullability(response, $"This {id} is Invalid");
             return response;
@@ -93,14 +86,14 @@ namespace StockAnalyzeCache.CacheServices
 
         public Task<List<int>> GetCompanyIds()
         {
-            CacheAllCompany(CompanyCacheKey);
+            CacheAll(companyRepository, CompanyCacheKey);
             var response = companyRepository.GetCompanyIds();
             return Task.FromResult(response);
         }
 
         public async Task<CustomResponseDto<CompanywithUsers>> GetCompanyUsers(int companyId)
         {
-            CacheAllCompany(CompanyWithUserskey);
+            CacheAll(companyRepository, CompanyCacheKey);
             var response = await companyRepository.GetCompanyUsers(companyId);
             await CheckNullability(Task.FromResult(response), $"This {companyId} is Invalid");
             var dto = mapper.Map<CompanywithUsers>(response);

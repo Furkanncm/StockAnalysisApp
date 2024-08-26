@@ -17,7 +17,6 @@ namespace StockAnalyzeApp.Repository.Configuration
             builder.HasIndex(x => x.StockCode).IsUnique();
             builder.Property(x=>x.Id).IsRequired();
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.StockCode).IsRequired();
             builder.Property(x => x.Quantity).IsRequired();
             builder.Property(x => x.CreatedDate).IsRequired();
             builder.HasOne(x=>x.User).WithMany(x=>x.Stocks).HasForeignKey(x=>x.UserId);

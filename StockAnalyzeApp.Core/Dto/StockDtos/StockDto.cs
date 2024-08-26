@@ -20,5 +20,8 @@ namespace StockAnalyzeApp.Core.Dto.StockDtos
         public int UserId { get; set; }
 
         public string OrderCode { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

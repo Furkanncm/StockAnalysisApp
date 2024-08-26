@@ -19,5 +19,7 @@ namespace StockAnalyzeApp.Core.Dto.StockDtos
         public int Quantity { get; set; }
         public string OrderCode { get; set; }
 
+        public DateTime CreatedDate { get; set; }= DateTime.Now;
+        public DateTime UpdatedDate { get; set; }
     }
 }

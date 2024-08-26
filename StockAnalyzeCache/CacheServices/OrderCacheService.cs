@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using StockAnalyzeApp.Core.Dto.BaseResponseDtos;
 using StockAnalyzeApp.Core.Dto.OrderDtos;
@@ -6,6 +7,7 @@ using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,28 +25,22 @@ namespace StockAnalyzeCache.CacheServices
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMemoryCache memoryCache;
+        private readonly StockAnalyzeAppContext dbcontext;
 
-        public OrderCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IOrderRepository orderRepository) : base(memoryCache, unitOfWork)
+        public OrderCacheService(IMemoryCache memoryCache, IUnitOfWork unitOfWork, IMapper mapper, IOrderRepository orderRepository, StockAnalyzeAppContext dbcontext) : base(memoryCache, unitOfWork)
         {
             this.memoryCache=memoryCache;
             this.unitOfWork=unitOfWork;
             this.mapper=mapper;
             this.orderRepository=orderRepository;
+            this.dbcontext=dbcontext;
 
-
-            if (!memoryCache.TryGetValue(OrderCacheKey, out _))
-            {
-                CacheAll(orderRepository, OrderCacheKey);
-            }
-
+            CacheAll(orderRepository, OrderCacheKey);
         }
 
-        public void CacheAllOrder(string cacheKey)
-        {
-            CacheAll(orderRepository, cacheKey);
-        }
         public async Task AddAsync(Order entity)
         {
+            entity.CreatedDate=DateTime.Now;
             await orderRepository.AddAsync(entity);
             await CommitAndRemoveCache(OrderCacheKey);
         }
@@ -75,23 +71,23 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            CacheAllOrder(OrderCacheKey);
-            var response= await orderRepository.GetAllAsync();
+            CacheAll(orderRepository,OrderCacheKey);
+            var response = await orderRepository.GetAllAsync();
             CheckNullability(response, "There is no Order");
             return response;
         }
 
         public Task<Order> GetByIdAsync(int id)
         {
-            CacheAllOrder(OrderCacheKey);
-            var response= orderRepository.GetByIdAsync(id);
+            CacheAll(orderRepository, OrderCacheKey);
+            var response = orderRepository.GetByIdAsync(id);
             CheckNullability(response, $"This {id} is Invalid");
             return response;
         }
 
         public async Task<CustomResponseDto<IEnumerable<OrderInfoDto>>> GetGreaterTotalPriceOrder(int price)
         {
-            CacheAllOrder(OrderCacheKey);
+            CacheAll(orderRepository, OrderCacheKey);
             var response = await orderRepository.GetGreaterTotalPriceOrder(price);
             CheckNullability(response, "There is no Order");
             var dto = mapper.Map<IEnumerable<OrderInfoDto>>(response);
@@ -110,7 +106,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<CustomResponseDto<OrderWithUserDto>> GetOrderWithUser(string OrderCode)
         {
-            CacheAllOrder(OrderWithUserKey);
+            CacheAll(orderRepository, OrderWithUserKey);
             var response = await orderRepository.GetOrdersWithUser(OrderCode);
             await CheckNullability(Task.FromResult(response), "There is no Order");
             var dto = mapper.Map<OrderWithUserDto>(response);
@@ -119,7 +115,7 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task<CustomResponseDto<OrderWithOrderCodeDto>> GetWithOrderCode(string OrderCode)
         {
-            CacheAllOrder(OrderCacheKey);
+            CacheAll(orderRepository, OrderCacheKey);
             var response = await orderRepository.GetWithOrderCode(OrderCode);
             await CheckNullability(Task.FromResult(response), "There is no Order");
             var dto = mapper.Map<OrderWithOrderCodeDto>(response);
@@ -128,6 +124,9 @@ namespace StockAnalyzeCache.CacheServices
 
         public async Task Update(Order entity)
         {
+            var response = await dbcontext.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.Id == entity.Id);
+            entity.CreatedDate = response.CreatedDate;
+            entity.UpdatedDate=DateTime.Now;
             orderRepository.Update(entity);
             await CommitAndRemoveCache(OrderCacheKey);
         }
@@ -136,6 +135,7 @@ namespace StockAnalyzeCache.CacheServices
         {
             orderRepository.UpdateRange(entities);
             await CommitAndRemoveCache(OrderCacheKey);
+
         }
     }
 }

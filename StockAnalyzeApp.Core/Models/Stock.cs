@@ -21,5 +21,9 @@ namespace StockAnalyzeApp.Core.Models
         public User User { get; set; }
 
         public string OrderCode { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
     }
 }

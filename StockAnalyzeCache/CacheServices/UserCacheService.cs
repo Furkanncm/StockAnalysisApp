@@ -6,6 +6,7 @@ using StockAnalyzeApp.Core.Models;
 using StockAnalyzeApp.Core.Repositories;
 using StockAnalyzeApp.Core.Services;
 using StockAnalyzeApp.Core.UnitOfWork;
+using StockAnalyzeApp.Repository.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace StockAnalyzeCache.CacheServices
 {
-    public class UserCacheService : IUserService
+    public class UserCacheService :CacheManager<User> ,IUserService
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
@@ -23,76 +24,58 @@ namespace StockAnalyzeCache.CacheServices
         private const string UserCacheKey = "UserCache";
         private const string UserStocksCacheKey = "UserStocksCache";
         private const string UserOrdersCacheKey = "UserOrdersCacheKey";
-        public UserCacheService(IMemoryCache memoryCache, IMapper mapper, IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserCacheService(IMemoryCache memoryCache, IMapper mapper, IUserRepository userRepository, IUnitOfWork unitOfWork):base(memoryCache,unitOfWork)
         {
             this.memoryCache=memoryCache;
             this.mapper=mapper;
             this.userRepository=userRepository;
             this.unitOfWork=unitOfWork;
 
-            // Memoryde veri var mı onu kontrol eder.
-            if (!memoryCache.TryGetValue(UserCacheKey, out _))
-            {
-                var users = userRepository.GetAll().ToList();
-                memoryCache.Set(UserCacheKey, users);
-            }
+            CacheAll(userRepository, UserCacheKey);
         }
 
 
-        public void CacheAllUser(string CacheKey)
-        {
-            memoryCache.Remove(CacheKey);
-            var users = userRepository.GetAll().ToList();
-            memoryCache.Set(CacheKey, users);
-        }
-
+     
         public async Task AddAsync(User entity)
         {
 
             await userRepository.AddAsync(entity);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public async Task AddRangeAsync(IEnumerable<User> entities)
         {
             await userRepository.AddRangeAsync(entities);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public async Task Update(User entity)
         {
             userRepository.Update(entity);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public async Task UpdateRange(IEnumerable<User> entities)
         {
             userRepository.UpdateRange(entities);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
         public async Task Delete(int id)
         {
             userRepository.Delete(id);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public async Task DeleteAll(User entity)
         {
             userRepository.DeleteAll(entity);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public async Task DeleteRange(IEnumerable<User> entities)
         {
             userRepository.DeleteRange(entities);
-            await unitOfWork.CommitAsync();
-            CacheAllUser(UserCacheKey);
+            await CommitAndRemoveCache(UserCacheKey);
         }
 
         public Task<IEnumerable<User>> GetAllAsync()
